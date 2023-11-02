@@ -5,6 +5,7 @@ import { adminNavOptions, navOptions, styles } from "@/utils";
 import { Fragment, useContext } from "react";
 import CommonModal from "../CommonModal";
 
+
 const isAdminView = false;
 const isAuthUser = true;
 const user = {
