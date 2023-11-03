@@ -4,6 +4,7 @@ import InputComponent from "@/components/FormElements/InputComponent"; // Import
 import SelectComponent from "@/components/FormElements/SelectComponent"; // Importa o componente de seleção personalizado.
 import { registrationFormControls } from "@/utils"; // Importa os controles do formulário de registro de um utilitário.
 import { useState } from "react";
+import { registerNewUser } from "../services/register";
 
 const isRegistered = false; // Define uma variável para verificar se o usuário já está registrado.
 
@@ -31,6 +32,14 @@ export default function Register() {
       formData.password.trim() !== ""
       ? true
       : false;
+  }
+
+  console.log(isFormValid());
+
+  async function handleRegisterOnSubmit() {
+    const data = await registerNewUser(formData);
+
+    console.log(data);
   }
 
   return (
@@ -83,6 +92,7 @@ export default function Register() {
               <button
                 className=" disabled:opacity-50 inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10"
                 disabled={!isFormValid()}
+                onClick={handleRegisterOnSubmit}
               >
                 Register
               </button>
