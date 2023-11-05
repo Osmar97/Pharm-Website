@@ -8,6 +8,8 @@ import { registerNewUser } from "../services/register";
 import { toast } from "react-toastify";
 import { GlobalContext } from "@/context";
 import Notification from "@/components/Notifications";
+import ComponentLevelLoader from "@/components/Loader/componentlevel";
+import { useRouter } from "next/navigation";
 
 
 const isRegistered = false; // Define uma variável para verificar se o usuário já está registrado.
@@ -23,8 +25,9 @@ const initialFormData = {
 export default function Register() {
   const [formData, setFormData] = useState(initialFormData);
   const [isRegistered, setIsRegistered] = useState(false);
-  const { isAuthUser, pageLevelLoader, setPageLevelLoader } =
+  const { pageLevelLoader, setPageLevelLoader, isAuthUser } =
     useContext(GlobalContext);
+  const router = useRouter()
 
   console.log(formData);
 
@@ -44,7 +47,9 @@ export default function Register() {
   console.log(isFormValid());
 
   async function handleRegisterOnSubmit() {
+    setPageLevelLoader(true);
     const data = await registerNewUser(formData);
+
     if (data.success) {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -133,7 +138,7 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <Notification/>
+      <Notification />
     </div>
   );
 }
