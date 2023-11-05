@@ -5,12 +5,7 @@ import { adminNavOptions, navOptions, styles } from "@/utils";
 import { Fragment, useContext } from "react";
 import CommonModal from "../CommonModal";
 
-
 const isAdminView = false;
-const isAuthUser = true;
-const user = {
-  role: "admin",
-};
 
 function NavItems({ isModalView = false }) {
   return (
@@ -49,6 +44,7 @@ function NavItems({ isModalView = false }) {
 
 export default function Navbar() {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
+  const { user, isAuthUser } = useContext(GlobalContext);
 
   return (
     <>
