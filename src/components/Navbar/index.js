@@ -4,6 +4,9 @@ import { GlobalContext } from "@/context";
 import { adminNavOptions, navOptions, styles } from "@/utils";
 import { Fragment, useContext } from "react";
 import CommonModal from "../CommonModal";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import Login from "@/app/login/page";
 
 const isAdminView = false;
 
@@ -44,7 +47,18 @@ function NavItems({ isModalView = false }) {
 
 export default function Navbar() {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
-  const { user, isAuthUser } = useContext(GlobalContext);
+  const { user, isAuthUser, setIsAuthUser, setUser } = useContext(GlobalContext);
+  const router = useRouter()
+
+  console.log(user, isAuthUser, "navbar");
+
+  function handleLogout() {
+    setIsAuthUser(false);
+    setUser(null);
+    Cookies.remove("token");
+    localStorage.clear();
+    router.push("/");
+  }
 
   return (
     <>
@@ -80,12 +94,15 @@ export default function Navbar() {
               )
             ) : null}
             {isAuthUser ? (
-              <button className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+              <button
+                onClick={handleLogout}
+                className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+              >
                 {" "}
                 Logout
               </button>
             ) : (
-              <button className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+              <button onClick={()=>router.push('/login')} className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                 {" "}
                 Login
               </button>
