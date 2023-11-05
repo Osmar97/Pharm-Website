@@ -8,6 +8,8 @@ import { login } from "../services/login";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import Notification from "@/components/Notifications";
+import ComponentLevelLoader from "@/components/Loader/componentlevel";
 
 const initialFormdata = {
   email: "",
@@ -15,8 +17,14 @@ const initialFormdata = {
 };
 
 export default function Login() {
-  const { isAuthUser, setIsAuthUser, user, setUser } =
-    useContext(GlobalContext);
+  const {
+    isAuthUser,
+    setIsAuthUser,
+    user,
+    setUser,
+    componentLevelLoader,
+    setComponentLevelLoader,
+  } = useContext(GlobalContext);
 
   const router = useRouter(); // Inicializa o hook de roteamento.
 
@@ -33,6 +41,7 @@ export default function Login() {
   }
 
   async function handleLogin() {
+    setComponentLevelLoader({ loading: true, id: "" });
     const res = await login(formData);
 
     console.log(res);
@@ -45,7 +54,6 @@ export default function Login() {
       setUser(res?.finalData?.user);
       setFormData(initialFormdata);
       Cookies.set("token", res?.finalData?.token);
-      localStorage.setItem("user", JSON.stringify(res?.finalData?.user));
       setComponentLevelLoader({ loading: false, id: "" });
     } else {
       toast.error(res.message, {
@@ -94,7 +102,17 @@ export default function Login() {
                 disabled={!isValidForm()}
                 onClick={handleLogin}
               >
-                Login
+                {componentLevelLoader && componentLevelLoader.loading ? (
+                  <ComponentLevelLoader
+                    text={"logging in"}
+                    color={"#ffffff"}
+                    loading={
+                      componentLevelLoader && componentLevelLoader.loading
+                    }
+                  />
+                ) : (
+                  "Login"
+                )}
               </button>
               <div className="flex flex-col items-center gap-2">
                 <p className="flex items-center justify-center mt-5">
@@ -111,6 +129,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <Notification />
     </div>
   );
 }

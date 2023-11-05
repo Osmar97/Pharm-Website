@@ -3,8 +3,12 @@
 import InputComponent from "@/components/FormElements/InputComponent"; // Importa o componente de input personalizado.
 import SelectComponent from "@/components/FormElements/SelectComponent"; // Importa o componente de seleção personalizado.
 import { registrationFormControls } from "@/utils"; // Importa os controles do formulário de registro de um utilitário.
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { registerNewUser } from "../services/register";
+import { toast } from "react-toastify";
+import { GlobalContext } from "@/context";
+import Notification from "@/components/Notifications";
+
 
 const isRegistered = false; // Define uma variável para verificar se o usuário já está registrado.
 
@@ -18,6 +22,9 @@ const initialFormData = {
 
 export default function Register() {
   const [formData, setFormData] = useState(initialFormData);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const { isAuthUser, pageLevelLoader, setPageLevelLoader } =
+    useContext(GlobalContext);
 
   console.log(formData);
 
@@ -38,9 +45,27 @@ export default function Register() {
 
   async function handleRegisterOnSubmit() {
     const data = await registerNewUser(formData);
+    if (data.success) {
+      toast.success(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setIsRegistered(true);
+      setPageLevelLoader(false);
+      setFormData(initialFormData);
+    } else {
+      toast.error(data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setPageLevelLoader(false);
+      setFormData(initialFormData);
+    }
 
     console.log(data);
   }
+
+  useEffect(() => {
+    if (isAuthUser) router.push("/");
+  }, [isAuthUser]);
 
   return (
     <div className="bg-white">
@@ -53,7 +78,7 @@ export default function Register() {
                 {/* Mostra "Registered successfully" se já estiver registrado, caso contrário, exibe "Sign Up". */}
               </p>
               {isRegistered ? (
-                <button className="inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10">
+                <button className="inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10">
                   {" "}
                   Login{" "}
                 </button>
@@ -94,12 +119,21 @@ export default function Register() {
                 disabled={!isFormValid()}
                 onClick={handleRegisterOnSubmit}
               >
-                Register
+                {pageLevelLoader ? (
+                  <ComponentLevelLoader
+                    text={"Registering"}
+                    color={"#ffffff"}
+                    loading={pageLevelLoader}
+                  />
+                ) : (
+                  "Register"
+                )}
               </button>
             </div>
           </div>
         </div>
       </div>
+      <Notification/>
     </div>
   );
 }
