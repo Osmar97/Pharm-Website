@@ -98,7 +98,10 @@ export default function Login() {
                 )}
               </div>
               <button
-                className="disabled:opacity-50 inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10"
+                className=" disabled:opacity-50 inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10"
+                style={{
+                  borderRadius:"15px 50px 15px 50px"
+                }}
                 disabled={!isValidForm()}
                 onClick={handleLogin}
               >
