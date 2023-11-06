@@ -1,8 +1,8 @@
 "use client"; // Importa a biblioteca "client".
 
-import InputComponent from "@/components/FormElements/InputComponent"; // Importa o componente de input personalizado.
-import SelectComponent from "@/components/FormElements/SelectComponent"; // Importa o componente de seleção personalizado.
-import { registrationFormControls } from "@/utils"; // Importa os controles do formulário de registro de um utilitário.
+import InputComponent from "@/components/FormElements/InputComponent";
+import SelectComponent from "@/components/FormElements/SelectComponent";
+import { registrationFormControls } from "@/utils";
 import { useContext, useEffect, useState } from "react";
 import { registerNewUser } from "../services/register";
 import { toast } from "react-toastify";
@@ -11,8 +11,7 @@ import Notification from "@/components/Notifications";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
 import { useRouter } from "next/navigation";
 
-
-const isRegistered = false; // Define uma variável para verificar se o usuário já está registrado.
+const isRegistered = false;
 
 const initialFormData = {
   name: "",
@@ -27,12 +26,11 @@ export default function Register() {
   const [isRegistered, setIsRegistered] = useState(false);
   const { pageLevelLoader, setPageLevelLoader, isAuthUser } =
     useContext(GlobalContext);
-  const router = useRouter()
-
-  console.log(formData);
+  const router = useRouter();
 
   function isFormValid() {
-    return formData &&
+    return (
+      formData &&
       formData.name &&
       formData.name.trim() !== "" &&
       formData.email &&
@@ -40,11 +38,8 @@ export default function Register() {
       /^\d+$/.test(formData.nif) &&
       formData.password &&
       formData.password.trim() !== ""
-      ? true
-      : false;
+    );
   }
-
-  console.log(isFormValid());
 
   async function handleRegisterOnSubmit() {
     setPageLevelLoader(true);
@@ -64,8 +59,6 @@ export default function Register() {
       setPageLevelLoader(false);
       setFormData(initialFormData);
     }
-
-    console.log(data);
   }
 
   useEffect(() => {
@@ -73,72 +66,68 @@ export default function Register() {
   }, [isAuthUser]);
 
   return (
-    <div className="bg-white">
-      <div className="flex flex-col items-center justify-between pt-0 pr-10 pl-10 mt-8 mr-auto xl:px-5 lg:flex-row">
-        <div className="flex flex-col justify-center items-center w-full pr-10 pl-10 lg:flex-row">
-          <div className="w-full mt-20 mr-0 mb-0 ml-0 relative max-w-2xl lg:mt-0 lg:w-5/12">
-            <div className="flex flex-col items-center justify-start pt-10 pr-10 pb-10 pl-10 bg-white-shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-4xl font-medium text-center font-futura">
-                {isRegistered ? "Registrado com sucesso" : "Sign Up"}{" "}
-                {/* Mostra "Registered successfully" se já estiver registrado, caso contrário, exibe "Sign Up". */}
-              </p>
-              {isRegistered ? (
-                <button className="inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10">
-                  {" "}
-                  Login{" "}
-                </button>
-              ) : (
-                <div className=" w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                  {registrationFormControls.map((controlItem) =>
-                    controlItem.componentType === "input" ? (
-                      <InputComponent
-                        type={controlItem.type}
-                        placeholder={controlItem.placeholder}
-                        label={controlItem.label}
-                        onChange={(event) => {
-                          setFormData({
-                            ...formData,
-                            [controlItem.id]: event.target.value,
-                          });
-                        }}
-                        value={formData[controlItem.id]}
-                      />
-                    ) : controlItem.componentType === "select" ? (
-                      <SelectComponent
-                        options={controlItem.options}
-                        Label={controlItem.label}
-                        onChange={(event) => {
-                          setFormData({
-                            ...formData,
-                            [controlItem.id]: event.target.value,
-                          });
-                        }}
-                        value={formData[controlItem.id]}
-                      />
-                    ) : null
-                  )}
-                </div>
-              )}
-              <button
-                className=" disabled:opacity-50 inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10"
-                disabled={!isFormValid()}
-                onClick={handleRegisterOnSubmit}
-              >
-                {pageLevelLoader ? (
-                  <ComponentLevelLoader
-                    text={"Registering"}
-                    color={"#ffffff"}
-                    loading={pageLevelLoader}
-                  />
-                ) : (
-                  "Register"
-                )}
-              </button>
-            </div>
+    <div className="bg-gradient-to-b from-blue-200 to-blue-500 h-screen flex items-center justify-center">
+      <div style={{width:"50%"}} className="bg-white p-8 rounded-xl shadow-lg ">
+        <h1 className="text-2xl font-bold text-center ">
+          {isRegistered ? "Registrado com sucesso" : "Registo"}
+        </h1>
+        {isRegistered ? (
+          <button
+          
+            className="bg-green-500 rounded-full text-white py-3 px-6 mt-4 w-full "
+            onClick={() => router.push("/login")}
+          >
+            Login
+          </button>
+        ) : (
+          <div className="space-y-4 mt-4">
+            {registrationFormControls.map((controlItem) =>
+              controlItem.componentType === "input" ? (
+                <InputComponent
+                  key={controlItem.id}
+                  type={controlItem.type}
+                  placeholder={controlItem.placeholder}
+                  label={controlItem.label}
+                  onChange={(event) => {
+                    setFormData({
+                      ...formData,
+                      [controlItem.id]: event.target.value,
+                    });
+                  }}
+                  value={formData[controlItem.id]}
+                />
+              ) : controlItem.componentType === "select" ? (
+                <SelectComponent
+                  key={controlItem.id}
+                  options={controlItem.options}
+                  Label={controlItem.label}
+                  onChange={(event) => {
+                    setFormData({
+                      ...formData,
+                      [controlItem.id]: event.target.value,
+                    });
+                  }}
+                  value={formData[controlItem.id]}
+                />
+              ) : null
+            )}
           </div>
-        </div>
+        )}
+        <button
+          className={`${
+            !isFormValid() ? "opacity-50" : ""
+          } bg-green-500 rounded-full text-white py-3 px-6 mt-4 w-full flex justify-center`}
+          disabled={!isFormValid()}
+          onClick={handleRegisterOnSubmit}
+        >
+          {pageLevelLoader ? (
+            <ComponentLevelLoader text="Registrando" color="#ffffff" loading={pageLevelLoader} />
+          ) : (
+            "Registar"
+          )}
+        </button>
       </div>
-      <Notification />
+      <Notification/>
     </div>
   );
 }

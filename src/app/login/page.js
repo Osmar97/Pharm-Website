@@ -1,15 +1,15 @@
 "use client"; // Importa a biblioteca "client".
 
-import InputComponent from "@/components/FormElements/InputComponent"; // Importa um componente de input personalizado.
-import { loginFormControls } from "@/utils"; // Importa os controles do formulário de login de um utilitário.
-import { useRouter } from "next/navigation"; // Importa o hook de roteamento do Next.js.
+import InputComponent from "@/components/FormElements/InputComponent";
+import { loginFormControls } from "@/utils";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { login } from "../services/login";
-import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Notification from "@/components/Notifications";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
+import { GlobalContext } from "@/context";
 
 const initialFormdata = {
   email: "",
@@ -26,25 +26,22 @@ export default function Login() {
     setComponentLevelLoader,
   } = useContext(GlobalContext);
 
-  const router = useRouter(); // Inicializa o hook de roteamento.
-
+  const router = useRouter();
   const [formData, setFormData] = useState(initialFormdata);
 
   function isValidForm() {
-    return formData &&
+    return (
+      formData &&
       formData.email &&
       formData.email.trim() !== "" &&
       formData.password &&
       formData.password.trim() !== ""
-      ? true
-      : false;
+    );
   }
 
   async function handleLogin() {
     setComponentLevelLoader({ loading: true, id: "" });
     const res = await login(formData);
-
-    console.log(res);
 
     if (res.success) {
       toast.success(res.message, {
@@ -64,75 +61,59 @@ export default function Login() {
     }
   }
 
-  console.log(isAuthUser, user);
-
   useEffect(() => {
     if (isAuthUser) router.push("/");
   }, [isAuthUser]);
 
   return (
-    <div className="bg-white">
-      <div className="flex flex-col items-center justify-between pt-0 pr-10 pl-10 mt-8 mr-auto xl:px-5 lg:flex-row">
-        <div className="flex flex-col justify-center items-center w-full pr-10 pl-10 lg:flex-row">
-          <div className="w-full mt-20 mr-0 mb-0 ml-0 relative max-w-2xl lg:mt-0 lg:w-5/12">
-            <div className="flex flex-col items-center justify-start pt-10 pr-10 pb-10 pl-10 bg-white-shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-4xl font-medium text-center font-futura">
-                Login
-              </p>
-              <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                {loginFormControls.map((controlItem) =>
-                  controlItem.componentType === "input" ? ( // Mapeia os controles do formulário.
-                    <InputComponent
-                      type={controlItem.type}
-                      placeholder={controlItem.placeholder}
-                      label={controlItem.label}
-                      value={formData[controlItem.id]}
-                      onChange={(event) => {
-                        setFormData({
-                          ...formData,
-                          [controlItem.id]: event.target.value,
-                        });
-                      }}
-                    />
-                  ) : null
-                )}
-              </div>
-              <button
-                className=" disabled:opacity-50 inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-10"
-                style={{
-                  borderRadius:"15px 50px 15px 50px"
+    <div className="bg-gradient-to-b from-blue-200 to-blue-500 h-screen flex items-center justify-center">
+      <div style={{width:"50%" , height:"60%"}} className="bg-white p-8 rounded-lg shadow-lg items-center justify-center flex flex-col">
+        <h1 className="text-2xl font-bold text-center">Login</h1>
+        <div style={{width:"100%"}} className="space-y-4 mt-4">
+          {loginFormControls.map((controlItem) =>
+            controlItem.componentType === "input" ? (
+              <InputComponent
+                key={controlItem.id}
+                type={controlItem.type}
+                placeholder={controlItem.placeholder}
+                label={controlItem.label}
+                value={formData[controlItem.id]}
+                onChange={(event) => {
+                  setFormData({
+                    ...formData,
+                    [controlItem.id]: event.target.value,
+                  });
                 }}
-                disabled={!isValidForm()}
-                onClick={handleLogin}
-              >
-                {componentLevelLoader && componentLevelLoader.loading ? (
-                  <ComponentLevelLoader
-                    text={"logging in"}
-                    color={"#ffffff"}
-                    loading={
-                      componentLevelLoader && componentLevelLoader.loading
-                    }
-                  />
-                ) : (
-                  "Login"
-                )}
-              </button>
-              <div className="flex flex-col items-center gap-2">
-                <p className="flex items-center justify-center mt-5">
-                  Novo Aqui?
-                </p>
-                <button
-                  className="inline-flex w-full items-center justify-center bg-green-500 px-6 py-4 text-lg text-white transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide mt-5"
-                  onClick={() => router.push("/register")} // Redireciona para a página de registro ao clicar no botão "Cadastre-se".
-                >
-                  Cadastre-se
-                </button>
-              </div>
-            </div>
-          </div>
+              />
+            ) : null
+          )}
+        </div>
+        <button
+          className={`${
+            !isValidForm() ? "opacity-50" : ""
+          } bg-green-500 rounded-full text-white py-3 px-6 mt-4 w-full flex justify-center font-bold `}
+          disabled={!isValidForm()}
+          onClick={handleLogin}
+        >
+          {componentLevelLoader && componentLevelLoader.loading ? (
+            <ComponentLevelLoader text="Logging in" color="#ffffff" loading={componentLevelLoader && componentLevelLoader.loading} />
+          ) : (
+            "Login"
+          )}
+        </button>
+        <div
+        style={{width:"100%"}}
+        className="flex flex-col items-center gap-2">
+          <p className="flex items-center justify-center mt-5">Não tem conta?</p>
+          <button
+            className="bg-green-500 rounded-full text-white py-3 px-6 mt-5 w-full transition-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide"
+            onClick={() => router.push("/register")}
+          >
+            Registe-se agora
+          </button>
         </div>
       </div>
-      <Notification />
+      <Notification/>
     </div>
   );
 }
