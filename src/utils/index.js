@@ -42,6 +42,12 @@ export const adminNavOptions = [
     label: "Add New Product",
     path: "/admin-view/add-product",
   },
+  {
+    id: "adminAddAdmin",
+    label: "Add Admin",
+    path: "/admin-view/add-admin",
+  },
+
 ];
 
 export const registrationFormControls = [
@@ -183,6 +189,29 @@ export const adminAddProductformControls = [
     type: "number",
     placeholder: "Enter Price Drop",
     label: "Price Drop",
+    componentType: "input",
+  },
+];
+export const adminAddAdmin = [
+  {
+    id: "name",
+    type: "text",
+    placeholder: "Enter new admin name",
+    label: "Name",
+    componentType: "input",
+  },
+  {
+    id: "email",
+    type: "email",
+    placeholder: "Enter new admin email",
+    label: "Email",
+    componentType: "input",
+  },
+  {
+    id: "password",
+    type: "password",
+    placeholder: "Enter password",
+    label: "Password",
     componentType: "input",
   },
 ];
