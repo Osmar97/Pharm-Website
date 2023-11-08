@@ -47,7 +47,6 @@ export const adminNavOptions = [
     label: "Add Admin",
     path: "/admin-view/add-admin",
   },
-
 ];
 
 export const registrationFormControls = [
@@ -159,6 +158,13 @@ export const adminAddProductformControls = [
         label: "Saúde",
       },
     ],
+  },
+  {
+    id: "size",
+    type: "text",
+    placeholder: "quantidade",
+    label: "quantidade",
+    componentType: "input",
   },
   {
     id: "deliveryInfo",
