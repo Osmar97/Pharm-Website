@@ -221,3 +221,16 @@ export const adminAddAdmin = [
     componentType: "input",
   },
 ];
+
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyBmyp9BQ0bOGwr65N_CydTi-6fosVeyfSM",
+  authDomain: "next-pharm.firebaseapp.com",
+  projectId: "next-pharm",
+  storageBucket: "next-pharm.appspot.com",
+  messagingSenderId: "1048276894127",
+  appId: "1:1048276894127:web:0875f004f5b0635144af5a",
+  measurementId: "G-SC0RHHN5QH"
+};
+
+export const firebaseStorage ="gs://next-pharm.appspot.com";

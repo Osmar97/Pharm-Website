@@ -38,7 +38,7 @@ export async function POST(req) {
         priceDrop,
       } = extractData;
 
-      const {error} = addNewProductSchema.validate(
+      const { error } = addNewProductSchema.validate(
         name,
         price,
         description,
@@ -56,8 +56,19 @@ export async function POST(req) {
         });
       }
 
-      const newCreatedProduct= await Product.create(extractData)
+      const newCreatedProduct = await Product.create(extractData);
 
+      if (newCreatedProduct) {
+        return NextResponse.json({
+          success: true,
+          message: " produto adicionado",
+        });
+      } else {
+        return NextResponse.json({
+          success: false,
+          message: " Erro ao inserir o produto",
+        });
+      }
     } else {
       return NextResponse.json({
         success: false,
