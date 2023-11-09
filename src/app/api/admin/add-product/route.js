@@ -61,7 +61,7 @@ export async function POST(req) {
       if (newCreatedProduct) {
         return NextResponse.json({
           success: true,
-          message: " produto adicionado",
+          message: " produto adicionado com sucesso",
         });
       } else {
         return NextResponse.json({

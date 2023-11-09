@@ -19,6 +19,9 @@ import { GlobalContext } from "@/context";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
 import { toast } from "react-toastify";
 import { addNewProduct } from "@/app/services/product";
+import Notification from "@/components/Notifications";
+import { useRouter } from "next/navigation";
+
 
 const app = initializeApp(firebaseConfig);
 
@@ -75,25 +78,47 @@ export default function AdminAddNewProduct() {
     setCurrentUpdatedProduct,
   } = useContext(GlobalContext);
 
+  const router = useRouter();
+
   async function handleImage(event) {
-    console.log(event.target.files);
-    const extractImgUrl = await helperToUploadToFb(event.target.files[0]);
+    if (event.target.files && event.target.files[0]) {
+      const extractImgUrl = await helperToUploadToFb(event.target.files[0]);
 
-    console.log(extractImgUrl);
+      console.log(extractImgUrl);
 
-    if (extractImgUrl !== "") {
-      setFormData({
-        ...formData,
-        imageUrl: extractImgUrl,
-      });
+      if (extractImgUrl !== "") {
+        setFormData({
+          ...formData,
+          imageUrl: extractImgUrl,
+        });
+      }
     }
   }
 
   async function handleAddProduct() {
-
+    setComponentLevelLoader({ loading: true, id: "" });
     const res = await addNewProduct(formData);
-
     console.log(res);
+
+    if (res.success) {
+      setComponentLevelLoader({ loading: false, id: "" });
+      toast.success(res.message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setFormData(initialFormData);
+      setTimeout(() => {
+
+        router.push('/admin-view/all-products')
+
+      },1000)
+    } else {
+      toast.error(res.message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      setComponentLevelLoader({ loading: false, id: "" });
+      setFormData(initialFormData);
+    }
   }
 
   return (
@@ -110,7 +135,7 @@ export default function AdminAddNewProduct() {
             type="file"
             onChange={handleImage}
           />
-          <div className="flex gap-2 flex-col">
+          <div className="flex gap-4 flex-col">
             {adminAddProductformControls.map((controlItem) =>
               controlItem.componentType === "input" ? (
                 <InputComponent
@@ -143,12 +168,22 @@ export default function AdminAddNewProduct() {
             )}
             <button
               onClick={handleAddProduct}
-              className="inline-flex w-full items-center rounded-lg bg-green-500 text-white justify-center px-6 py-4 text-lg font-bold uppercase tracking-wide">
-                Adicionar Produto
+              className="inline-flex w-full items-center rounded-lg bg-green-500 text-white justify-center px-6 py-4 text-lg font-bold uppercase tracking-wide"
+            >
+              {componentLevelLoader && componentLevelLoader.loading ? (
+                <ComponentLevelLoader
+                  text="A Adicionar o Produto"
+                  color="#ffffff"
+                  loading={componentLevelLoader && componentLevelLoader.loading}
+                />
+              ) : (
+                "Adicionar Produto"
+              )}
             </button>
           </div>
         </div>
       </div>
+      <Notification />
     </div>
   );
 }

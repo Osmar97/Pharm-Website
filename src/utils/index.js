@@ -117,28 +117,28 @@ export const adminAddProductformControls = [
     id: "name",
     type: "text",
     placeholder: "Enter name",
-    label: "Name",
+    label: "Nome do produto",
     componentType: "input",
   },
   {
     id: "price",
     type: "number",
     placeholder: "Enter price",
-    label: "Price",
+    label: "Preço",
     componentType: "input",
   },
   {
     id: "description",
     type: "text",
     placeholder: "Enter description",
-    label: "Description",
+    label: "Descrição",
     componentType: "input",
   },
   {
     id: "category",
     type: "",
     placeholder: "",
-    label: "Category",
+    label: "Categoria",
     componentType: "select",
     options: [
       {
@@ -162,15 +162,15 @@ export const adminAddProductformControls = [
   {
     id: "size",
     type: "text",
-    placeholder: "quantidade",
-    label: "quantidade",
+    placeholder: "Peso / Unidades",
+    label: "Peso / Unidades",
     componentType: "input",
   },
   {
     id: "deliveryInfo",
     type: "text",
     placeholder: "Enter deliveryInfo",
-    label: "Delivery Info",
+    label: "informações de entrega",
     componentType: "input",
   },
   {
