@@ -22,7 +22,6 @@ import { addNewProduct } from "@/app/services/product";
 import Notification from "@/components/Notifications";
 import { useRouter } from "next/navigation";
 
-
 const app = initializeApp(firebaseConfig);
 
 const storage = getStorage(app, firebaseStorage);
@@ -108,10 +107,8 @@ export default function AdminAddNewProduct() {
 
       setFormData(initialFormData);
       setTimeout(() => {
-
-        router.push('/admin-view/all-products')
-
-      },1000)
+        router.push("/admin-view/all-products");
+      }, 1000);
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_CENTER,
