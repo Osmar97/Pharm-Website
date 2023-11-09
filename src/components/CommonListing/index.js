@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import ProductButton from "./ProductButtons";
-import ProductTile from "./ProductTile";
 import { useEffect } from "react";
 import Notification from "../Notifications";
+import ProductTile from "./ProductTile/Index";
 
 export default function CommonListing({ data }) {
   const router = useRouter();
