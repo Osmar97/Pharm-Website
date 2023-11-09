@@ -38,7 +38,7 @@ export async function POST(req) {
         priceDrop,
       } = extractData;
 
-      const { error } = addNewProductSchema.validate(
+      const { error } = addNewProductSchema.validate({
         name,
         price,
         description,
@@ -48,7 +48,7 @@ export async function POST(req) {
         onSales,
         imageUrl,
         priceDrop
-      );
+    });
       if (error) {
         return NextResponse.json({
           success: false,
