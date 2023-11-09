@@ -33,7 +33,7 @@ export async function POST(req) {
         category,
         size,
         deliveryInfo,
-        onSales,
+        onSale,
         imageUrl,
         priceDrop,
       } = extractData;
@@ -45,7 +45,7 @@ export async function POST(req) {
         category,
         size,
         deliveryInfo,
-        onSales,
+        onSale,
         imageUrl,
         priceDrop
     });

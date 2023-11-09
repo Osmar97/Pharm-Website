@@ -7,7 +7,7 @@ import {
   firebaseConfig,
   firebaseStorage,
 } from "@/utils";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { initializeApp } from "firebase/app";
 import {
   getDownloadURL,
@@ -15,6 +15,10 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { GlobalContext } from "@/context";
+import ComponentLevelLoader from "@/components/Loader/componentlevel";
+import { toast } from "react-toastify";
+import { addNewProduct } from "@/app/services/product";
 
 const app = initializeApp(firebaseConfig);
 
@@ -64,19 +68,32 @@ const initialFormData = {
 export default function AdminAddNewProduct() {
   const [formData, setFormData] = useState(initialFormData);
 
+  const {
+    componentLevelLoader,
+    setComponentLevelLoader,
+    currentUpdatedProduct,
+    setCurrentUpdatedProduct,
+  } = useContext(GlobalContext);
 
   async function handleImage(event) {
     console.log(event.target.files);
     const extractImgUrl = await helperToUploadToFb(event.target.files[0]);
-  
+
     console.log(extractImgUrl);
-  
+
     if (extractImgUrl !== "") {
       setFormData({
         ...formData,
         imageUrl: extractImgUrl,
       });
     }
+  }
+
+  async function handleAddProduct() {
+
+    const res = await addNewProduct(formData);
+
+    console.log(res);
   }
 
   return (
@@ -124,8 +141,10 @@ export default function AdminAddNewProduct() {
                 />
               ) : null
             )}
-            <button className="inline-flex w-full items-center rounded-lg bg-green-500 text-white justify-center px-6 py-4 text-lg font-bold uppercase tracking-wide">
-              Adicionar produto
+            <button
+              onClick={handleAddProduct}
+              className="inline-flex w-full items-center rounded-lg bg-green-500 text-white justify-center px-6 py-4 text-lg font-bold uppercase tracking-wide">
+                Adicionar Produto
             </button>
           </div>
         </div>
