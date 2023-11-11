@@ -77,7 +77,13 @@ export default function AdminAddNewProduct() {
     setCurrentUpdatedProduct,
   } = useContext(GlobalContext);
 
+  console.log(currentUpdatedProduct);
+
   const router = useRouter();
+
+  useEffect(() => {
+
+  },[currentUpdatedProduct])
 
   async function handleImage(event) {
     if (event.target.files && event.target.files[0]) {

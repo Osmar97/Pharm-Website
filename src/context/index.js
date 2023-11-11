@@ -1,4 +1,5 @@
 "use client";
+
 import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
 
@@ -13,6 +14,7 @@ export default function GlobalState({ children }) {
     id: "",
   });
   const [user, setUser] = useState(null);
+  const [currentUpdatedProduct, setCurrentUpdatedProduct] = useState(null);
 
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
@@ -37,6 +39,8 @@ export default function GlobalState({ children }) {
         setPageLevelLoader,
         componentLevelLoader,
         setComponentLevelLoader,
+        currentUpdatedProduct,
+        setCurrentUpdatedProduct,
       }}
     >
       {" "}
