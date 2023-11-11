@@ -34,18 +34,13 @@ export const navOptions = [
 export const adminNavOptions = [
   {
     id: "adminListing",
-    label: "Manage All Products",
+    label: "Gerir produtos",
     path: "/admin-view/all-products",
   },
   {
     id: "adminNewProduct",
-    label: "Add New Product",
+    label: "Adicionar novo produto",
     path: "/admin-view/add-product",
-  },
-  {
-    id: "adminAddAdmin",
-    label: "Add Admin",
-    path: "/admin-view/add-admin",
   },
 ];
 

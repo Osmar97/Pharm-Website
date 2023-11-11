@@ -7,7 +7,7 @@ import {
   firebaseConfig,
   firebaseStorage,
 } from "@/utils";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import {
   getDownloadURL,
@@ -18,7 +18,7 @@ import {
 import { GlobalContext } from "@/context";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
 import { toast } from "react-toastify";
-import { addNewProduct } from "@/app/services/product";
+import { addNewProduct, updateAProduct } from "@/app/services/product";
 import Notification from "@/components/Notifications";
 import { useRouter } from "next/navigation";
 
@@ -82,8 +82,8 @@ export default function AdminAddNewProduct() {
   const router = useRouter();
 
   useEffect(() => {
-
-  },[currentUpdatedProduct])
+    if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
+  }, [currentUpdatedProduct]);
 
   async function handleImage(event) {
     if (event.target.files && event.target.files[0]) {
@@ -102,7 +102,10 @@ export default function AdminAddNewProduct() {
 
   async function handleAddProduct() {
     setComponentLevelLoader({ loading: true, id: "" });
-    const res = await addNewProduct(formData);
+    const res =
+      currentUpdatedProduct !== null
+        ? await updateAProduct(formData)
+        : await addNewProduct(formData);
     console.log(res);
 
     if (res.success) {

@@ -2,14 +2,14 @@
 
 import { GlobalContext } from "@/context";
 import { adminNavOptions, navOptions, styles } from "@/utils";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import CommonModal from "../CommonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import Login from "@/app/login/page";
 import { Admin, Cart, Logout, Profile } from "../svgs";
 
-function NavItems({ isModalView = false, isAdminView , router}) {
+function NavItems({ isModalView = false, isAdminView, router }) {
   return (
     <div
       className={`items-center justify-between w-full md:flex md:w-auto ${
@@ -48,13 +48,26 @@ function NavItems({ isModalView = false, isAdminView , router}) {
 
 export default function Navbar() {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
-  const { user, isAuthUser, setIsAuthUser, setUser } =
-    useContext(GlobalContext);
-
+  const {
+    user,
+    isAuthUser,
+    setIsAuthUser,
+    setUser,
+    currentUpdatedProduct,
+    setCurrentUpdatedProduct,
+  } = useContext(GlobalContext);
 
   const router = useRouter();
-  
+
   const pathName = usePathname();
+
+  useEffect(() => {
+    if (
+      pathName !== "/admin-view/add-product" &&
+      currentUpdatedProduct !== null
+    )
+      setCurrentUpdatedProduct(null);
+  }, [pathName]);
 
   console.log(user, isAuthUser, "navbar");
 
@@ -81,7 +94,7 @@ export default function Navbar() {
             </span>
           </div>
           <div className="flex md:order-2 gap-2">
-          {!isAdminView && isAuthUser ? (
+            {!isAdminView && isAuthUser ? (
               <Fragment>
                 <button style={{ marginRight: "10px" }} title="Profile">
                   <Profile
@@ -163,7 +176,13 @@ export default function Navbar() {
 
       <CommonModal
         showModalTitle={false}
-        mainContent={<NavItems router={router} isModalView={true} isAdminView={isAdminView} />}
+        mainContent={
+          <NavItems
+            router={router}
+            isModalView={true}
+            isAdminView={isAdminView}
+          />
+        }
         show={showNavModal}
         setShow={setShowNavModal}
       />
