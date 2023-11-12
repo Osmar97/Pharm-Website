@@ -115,6 +115,7 @@ export default function AdminAddNewProduct() {
       });
 
       setFormData(initialFormData);
+      setCurrentUpdatedProduct(null);
       setTimeout(() => {
         router.push("/admin-view/all-products");
       }, 1000);
@@ -178,10 +179,16 @@ export default function AdminAddNewProduct() {
             >
               {componentLevelLoader && componentLevelLoader.loading ? (
                 <ComponentLevelLoader
-                  text="A Adicionar o Produto"
-                  color="#ffffff"
+                  text={
+                    currentUpdatedProduct !== null
+                      ? "A atualizar o produto"
+                      : "A Adicionar o Produto"
+                  }
+                  color={"#ffffff"}
                   loading={componentLevelLoader && componentLevelLoader.loading}
                 />
+              ) : currentUpdatedProduct !== null ? (
+                "Atualizar produto"
               ) : (
                 "Adicionar Produto"
               )}
