@@ -42,15 +42,16 @@ export default function Login() {
   async function handleLogin() {
     setComponentLevelLoader({ loading: true, id: "" });
     const res = await login(formData);
-
     if (res.success) {
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsAuthUser(true);
+      console.log(res,"aquiii")
       setUser(res?.finalData?.user);
       setFormData(initialFormdata);
       Cookies.set("token", res?.finalData?.token);
+      Cookies.set("user", JSON.stringify(res?.finalData?.user));
       setComponentLevelLoader({ loading: false, id: "" });
     } else {
       toast.error(res.message, {
