@@ -52,6 +52,7 @@ export const updateAProduct = async (formData) => {
   } catch (e) {
     console.log(e);
   }
+  console.log(updateAProduct);
 };
 
 export const deleteAProduct = async (id) => {

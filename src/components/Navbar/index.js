@@ -8,6 +8,8 @@ import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import Login from "@/app/login/page";
 import { Admin, Cart, Logout, Profile } from "../svgs";
+import Image from "next/image";
+import logo from "../img/logo2.png";
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -90,7 +92,11 @@ export default function Navbar() {
               onClick={() => router.push("/")}
               className="slef-center text-2xl font-semibold whitespace-nowrap text-green-500"
             >
-              Farmácia Lobo
+              <Image
+                src={logo}
+                alt="logo"
+                style={{width:200 , height:60 , scale:2 }}
+              />
             </span>
           </div>
           <div className="flex md:order-2 gap-2">

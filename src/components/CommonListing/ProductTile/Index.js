@@ -18,7 +18,7 @@ export default function ProductTile({ item }) {
         />
         {item.onSale === "sim" && (
           <div className="absolute top-2 left-2 bg-red-500 text-white p-1 rounded-full">
-            <p className="text-xs font-bold uppercase tracking-wide">Sale</p>
+            <p className="text-xs font-bold uppercase tracking-wide">Promoção</p>
           </div>
         )}
       </div>

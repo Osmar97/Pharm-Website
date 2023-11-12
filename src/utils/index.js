@@ -12,22 +12,22 @@ export const navOptions = [
   {
     id: "listingSaude",
     label: "Saúde",
-    path: "/product/listing/Saude",
+    path: "/product/listing/saude",
   },
   {
     id: "listingBelezaa",
     label: "Beleza",
-    path: "/product/listing/Beleza",
+    path: "/product/listing/beleza",
   },
   {
     id: "listingHomem",
     label: "Homem",
-    path: "/product/listing/Homem",
+    path: "/product/listing/homem",
   },
   {
     id: "listingMulher",
     label: "Mulher",
-    path: "/product/listing/Mulher",
+    path: "/product/listing/mulher",
   },
 ];
 
@@ -217,7 +217,6 @@ export const adminAddAdmin = [
   },
 ];
 
-
 export const firebaseConfig = {
   apiKey: "AIzaSyBmyp9BQ0bOGwr65N_CydTi-6fosVeyfSM",
   authDomain: "next-pharm.firebaseapp.com",
@@ -225,7 +224,7 @@ export const firebaseConfig = {
   storageBucket: "next-pharm.appspot.com",
   messagingSenderId: "1048276894127",
   appId: "1:1048276894127:web:0875f004f5b0635144af5a",
-  measurementId: "G-SC0RHHN5QH"
+  measurementId: "G-SC0RHHN5QH",
 };
 
-export const firebaseStorage ="gs://next-pharm.appspot.com";
+export const firebaseStorage = "gs://next-pharm.appspot.com";
