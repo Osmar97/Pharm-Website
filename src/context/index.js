@@ -15,9 +15,12 @@ export default function GlobalState({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    
     if (Cookies.get("token") !== undefined) {
       setIsAuthUser(true);
-      const userData = JSON.parse(localStorage.getItem("user")) || {};
+      const userData = JSON.parse(Cookies.get("user"))
+    
+
       setUser(userData);
     } else {
       setIsAuthUser(false);
