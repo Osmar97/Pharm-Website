@@ -20,7 +20,7 @@ export async function GET(req) {
       return NextResponse.json({
         success: false,
         status: 204,
-        message: "No Products found !",
+        message: "No Products found!",
       });
     }
   } catch (e) {
