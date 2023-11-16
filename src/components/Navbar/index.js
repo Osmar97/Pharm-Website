@@ -9,7 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Login from "@/app/login/page";
 import { Admin, Cart, Logout, Profile } from "../svgs";
 import Image from "next/image";
-import logo from "../img/logo2.png";
+import logo from "../img/logo3.png";
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -77,6 +77,7 @@ export default function Navbar() {
     setIsAuthUser(false);
     setUser(null);
     Cookies.remove("token");
+    Cookies.remove("token");
     localStorage.clear();
     router.push("/");
   }
@@ -90,12 +91,12 @@ export default function Navbar() {
           <div className="flex items-center cursor-pointer">
             <span
               onClick={() => router.push("/")}
-              className="slef-center text-2xl font-semibold whitespace-nowrap text-green-500"
+              className="left-center text-2xl font-semibold whitespace-nowrap text-green-500"
             >
               <Image
                 src={logo}
                 alt="logo"
-                style={{width:200 , height:60 , scale:2 }}
+                style={{width:300 , height:80}}
               />
             </span>
           </div>
@@ -146,7 +147,7 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={() => router.push("/login")}
-                className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-3xl"
               >
                 {" "}
                 Login
@@ -177,6 +178,9 @@ export default function Navbar() {
             </button>
           </div>
           <NavItems router={router} isAdminView={isAdminView} />
+        </div>
+        <div className="flex items-center justify-center">
+
         </div>
       </nav>
 

@@ -47,7 +47,6 @@ export default function Login() {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsAuthUser(true);
-      console.log(res,"aquiii")
       setUser(res?.finalData?.user);
       setFormData(initialFormdata);
       Cookies.set("token", res?.finalData?.token);
