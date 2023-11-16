@@ -10,6 +10,8 @@ import Login from "@/app/login/page";
 import { Admin, Cart, Logout, Profile } from "../svgs";
 import Image from "next/image";
 import logo from "../img/logo3.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
+import { faSearch } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -179,8 +181,13 @@ export default function Navbar() {
           </div>
           <NavItems router={router} isAdminView={isAdminView} />
         </div>
-        <div className="flex items-center justify-center"> // Navbar Tratar 
-          
+        <div className="flex items-center justify-center"> 
+
+              <div style={{borderRadius:'25px', margin:'8px'  , border:"1px solid #ccc" , width:"60%"}} className="flex justify-between h-8 shadow-lg">
+                <input  className="focus:border-transparent outline-none m-2 w-full" type="text" placeholder="Search..." />
+                <FontAwesomeIcon className="p-2" style={{fontSize:"15px",cursor:'pointer'}} icon={faSearch}></FontAwesomeIcon>
+                              </div>
+            
         </div>
       </nav>
 
