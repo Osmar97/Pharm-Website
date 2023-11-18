@@ -192,6 +192,20 @@ export const adminAddProductformControls = [
     label: "Price Drop",
     componentType: "input",
   },
+  {
+    id: "modoDeUso",
+    type: "text",
+    placeholder: "Modo de Uso",
+    label: "Modo de utilização e Precauções",
+    componentType: "input",
+  },
+  {
+    id: "conservacao",
+    type: "text",
+    placeholder: "Conservação",
+    label: "Conservação",
+    componentType: "input",
+  },
 ];
 export const adminAddAdmin = [
   {

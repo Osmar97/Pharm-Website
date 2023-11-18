@@ -1,11 +1,11 @@
 "use client";
 
 import { GlobalContext } from "@/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import ComponentLevelLoader from "../Loader/componentlevel";
-import { addToCart } from "@/services/cart";
-import Notification from "../Notification";
+import { addToCart } from "@/app/services/cart";
+import Notification from "../Notifications";
 
 export default function CommonDetails({ item }) {
   const {
@@ -14,6 +14,8 @@ export default function CommonDetails({ item }) {
     user,
     setShowCartModal,
   } = useContext(GlobalContext);
+
+  const [activeContent, setActiveContent] = useState("description")
 
   async function handleAddToCart(getItem) {
     setComponentLevelLoader({ loading: true, id: "" });
@@ -87,7 +89,7 @@ export default function CommonDetails({ item }) {
                     item.onSale === "sim" ? "line-through" : ""
                   }`}
                 >
-                  ${item && item.price}
+                  {item && item.price}€
                 </h1>
                 {item.onSale === "sim" ? (
                   <h1 className="text-3xl font-bold text-red-700">{`${(
@@ -115,11 +117,11 @@ export default function CommonDetails({ item }) {
               </button>
             </div>
             <ul className="mt-8 space-y-2">
-              <li className="flex items-center text-left text-sm font-medium text-gray-600">
+              <li className="flex items-center text-left text-base font-medium text-gray-600">
                 {item && item.deliveryInfo}
               </li>
-              <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                {"Cancel anytime"}
+              <li className="mt-8 flex flex-col items-center space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+                {"INFORMAÇÕES TÉCNICAS"}
               </li>
             </ul>
             <div className="lg:col-span-3">
@@ -127,20 +129,51 @@ export default function CommonDetails({ item }) {
                 <nav className="flex gap-4">
                   <a
                     href="#"
-                    className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900"
+                    className={`border-b-2 ${
+                      activeContent === "description"
+                        ? "border-green-500"
+                        : "border-transparent"
+                    } py-4 text-sm font-medium text-gray-900 hover:border-green-500 focus:outline-none focus:border-green-500 transition-all duration-300`}
+                    onClick={() => setActiveContent("description")}
                   >
                     Descrição
+                  </a>
+                  <a
+                    href="#"
+                    className={`border-b-2 ${
+                      activeContent === "modoDeUso"
+                        ? "border-green-500"
+                        : "border-transparent"
+                    } py-4 text-sm font-medium text-gray-900 hover:border-green-500 focus:outline-none focus:border-green-500 transition-all duration-300`}
+                    onClick={() => setActiveContent("modoDeUso")}
+                  >
+                    Modo de Uso
+                  </a>
+                  <a
+                    href="#"
+                    className={`border-b-2 ${
+                      activeContent === "conservacao"
+                        ? "border-green-500"
+                        : "border-transparent"
+                    } py-4 text-sm font-medium text-gray-900 hover:border-green-500 focus:outline-none focus:border-green-500 transition-all duration-300`}
+                    onClick={() => setActiveContent("conservacao")}
+                  >
+                    Conservação
                   </a>
                 </nav>
               </div>
               <div className="mt-8 flow-root sm:mt-12">
-                {item && item.description}
+                {activeContent === "description"
+                  ? item && item.description
+                  : activeContent === "modoDeUso"
+                  ? item && item.modoDeUso
+                  : item && item.conservacao}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Notification/>
+      <Notification />
     </section>
   );
 }

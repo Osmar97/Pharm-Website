@@ -106,10 +106,9 @@ export default function CartModal() {
                       </h3>
                     </div>
                     <p className="mt-1 text-sm text-gray-600">
-                      $
                       {cartItem &&
                         cartItem.productID &&
-                        cartItem.productID.price}
+                        cartItem.productID.price}€
                     </p>
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">

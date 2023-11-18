@@ -65,6 +65,8 @@ const initialFormData = {
   onSale: "no",
   imageUrl: "",
   priceDrop: 0,
+  modoDeUso: "",
+  conservacao: "",
 };
 
 export default function AdminAddNewProduct() {
