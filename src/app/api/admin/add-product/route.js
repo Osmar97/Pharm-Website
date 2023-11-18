@@ -53,7 +53,7 @@ export async function POST(req) {
         imageUrl,
         priceDrop,
         modoDeUso,
-        conservacao
+        conservacao,
     });
       if (error) {
         return NextResponse.json({
@@ -63,6 +63,7 @@ export async function POST(req) {
       }
 
       const newCreatedProduct = await Product.create(extractData);
+      console.log("Newly created product:", newCreatedProduct);
 
       if (newCreatedProduct) {
         return NextResponse.json({

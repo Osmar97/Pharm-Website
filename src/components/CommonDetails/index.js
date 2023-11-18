@@ -147,7 +147,7 @@ export default function CommonDetails({ item }) {
                     } py-4 text-sm font-medium text-gray-900 hover:border-green-500 focus:outline-none focus:border-green-500 transition-all duration-300`}
                     onClick={() => setActiveContent("modoDeUso")}
                   >
-                    Modo de Uso
+                    Modo de utilização e Precauções
                   </a>
                   <a
                     href="#"
