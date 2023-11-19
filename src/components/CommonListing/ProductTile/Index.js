@@ -33,9 +33,9 @@ export default function ProductTile({ item }) {
               {`${item.price}€`}
             </p>
             {item.onSale === "sim" && (
-              <p className="text-sm font-semibold text-red-700">{`$ ${(
+              <p className="text-sm font-semibold text-red-700">{` ${(
                 item.price - item.price * (item.priceDrop / 100)
-              ).toFixed(2)}`}</p>
+              ).toFixed(2)}€`}</p>
             )}
           </div>
           {item.onSale === "sim" && (
