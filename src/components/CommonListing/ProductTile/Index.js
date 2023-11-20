@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 
 export default function ProductTile({ item }) {
+  const stock = item.stock || 0
   const router = useRouter();
 
   return (
@@ -46,6 +47,9 @@ export default function ProductTile({ item }) {
           )}
         </div>
         <h3 className="text-gray-700 text-sm mt-2">{item.name}</h3>
+        <div className={`absolute bottom-0 right-0 p-2 bg-white text-red-500 font-bold`}>
+        Stock: {stock}
+      </div>
       </div>
     </div>
   );
