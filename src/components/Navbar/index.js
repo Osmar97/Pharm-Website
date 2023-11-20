@@ -12,6 +12,7 @@ import Image from "next/image";
 import logo from "../img/logo3.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
 import { faSearch } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
+import CartModal from "../CartModal";
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -59,6 +60,7 @@ export default function Navbar() {
     setUser,
     currentUpdatedProduct,
     setCurrentUpdatedProduct,
+    showCartModal,
   } = useContext(GlobalContext);
 
   const router = useRouter();
@@ -98,7 +100,7 @@ export default function Navbar() {
               <Image
                 src={logo}
                 alt="logo"
-                style={{width:"200px" , height:"auto" , objectFit:"cover"}}
+                style={{ width: "200px", height: "auto", objectFit: "cover" }}
               />
             </span>
           </div>
@@ -161,7 +163,7 @@ export default function Navbar() {
               className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-sticky"
               aria-expanded="false"
-              onClick={() => setShowNavModal(!showNavModal) }
+              onClick={() => setShowNavModal(!showNavModal)}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -181,13 +183,27 @@ export default function Navbar() {
           </div>
           <NavItems router={router} isAdminView={isAdminView} />
         </div>
-        <div className="flex items-center justify-center"> 
-
-              <div style={{borderRadius:'25px', margin:'8px'  , border:"1px solid #ccc" , width:"60%"}} className="flex justify-between h-8 shadow-lg">
-                <input  className="focus:border-transparent outline-none m-2 w-full" type="text" placeholder="Search..." />
-                <FontAwesomeIcon className="p-2" style={{fontSize:"15px",cursor:'pointer'}} icon={faSearch}></FontAwesomeIcon>
-                              </div>
-            
+        <div className="flex items-center justify-center">
+          <div
+            style={{
+              borderRadius: "25px",
+              margin: "8px",
+              border: "1px solid #ccc",
+              width: "60%",
+            }}
+            className="flex justify-between h-8 shadow-lg"
+          >
+            <input
+              className="focus:border-transparent outline-none m-2 w-full"
+              type="text"
+              placeholder="Search..."
+            />
+            <FontAwesomeIcon
+              className="p-2"
+              style={{ fontSize: "15px", cursor: "pointer" }}
+              icon={faSearch}
+            ></FontAwesomeIcon>
+          </div>
         </div>
       </nav>
 
@@ -203,6 +219,7 @@ export default function Navbar() {
         show={showNavModal}
         setShow={setShowNavModal}
       />
+      {showCartModal && <CartModal />}
     </>
   );
 }

@@ -206,6 +206,13 @@ export const adminAddProductformControls = [
     label: "Conservação",
     componentType: "input",
   },
+  {
+    id: "stock",
+    type: "number",
+    placeholder: "Quantidade de stock",
+    label: "Stock",
+    componentType: "input",
+  },
 ];
 export const adminAddAdmin = [
   {

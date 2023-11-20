@@ -67,6 +67,7 @@ const initialFormData = {
   priceDrop: 0,
   modoDeUso: "",
   conservacao: "",
+  stock: 0,
 };
 
 export default function AdminAddNewProduct() {

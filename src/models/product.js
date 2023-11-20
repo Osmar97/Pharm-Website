@@ -13,6 +13,7 @@ const ProductSchema = new mongoose.Schema(
     priceDrop: Number,
     modoDeUso: String,
     conservacao: String,
+    stock: Number,
   },
   { timestamps: true }
 );

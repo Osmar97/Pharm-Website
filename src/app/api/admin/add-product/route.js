@@ -1,7 +1,9 @@
 import connectToDB from "@/database";
+import AuthUser from "@/middleware/AuthUser";
 import Product from "@/models/product";
 import Joi from "joi";
 import { NextResponse } from "next/server";
+
 
 const addNewProductSchema = Joi.object({
   name: Joi.string().required(),
@@ -15,6 +17,7 @@ const addNewProductSchema = Joi.object({
   priceDrop: Joi.number().required(),
   modoDeUso: Joi.string().required(),
   conservacao: Joi.string().required(),
+  stock: Joi.number().integer().min(0).required(),
 });
 
 export const dynamic = "force-dynamic";
@@ -23,9 +26,10 @@ export async function POST(req) {
   try {
     await connectToDB();
 
-    const user = "admin";
+    const isAuthUser = await AuthUser(req)
+    console.log(isAuthUser , 'osmar');
 
-    if (user === "admin") {
+    if (isAuthUser?.role === "admin") {
       const extractData = await req.json();
 
       const {
@@ -40,6 +44,7 @@ export async function POST(req) {
         priceDrop,
         modoDeUso,
         conservacao,
+        stock,
       } = extractData;
 
       const { error } = addNewProductSchema.validate({
@@ -54,6 +59,7 @@ export async function POST(req) {
         priceDrop,
         modoDeUso,
         conservacao,
+        stock
     });
       if (error) {
         return NextResponse.json({
@@ -63,7 +69,6 @@ export async function POST(req) {
       }
 
       const newCreatedProduct = await Product.create(extractData);
-      console.log("Newly created product:", newCreatedProduct);
 
       if (newCreatedProduct) {
         return NextResponse.json({

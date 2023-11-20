@@ -3,10 +3,10 @@
 import { Fragment, useContext, useEffect } from "react";
 import CommonModal from "../CommonModal";
 import { GlobalContext } from "@/context";
-import { deleteFromCart, getAllCartItems } from "@/services/cart";
 import { toast } from "react-toastify";
 import ComponentLevelLoader from "../Loader/componentlevel";
 import { useRouter } from "next/navigation";
+import { deleteFromCart, getAllCartItems } from "@/app/services/cart";
 
 export default function CartModal() {
   const {

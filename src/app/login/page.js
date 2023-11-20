@@ -68,7 +68,7 @@ export default function Login() {
   return (
     <div className="bg-gradient-to-b from-blue-200 to-blue-500 h-screen flex items-center justify-center">
       <div style={{width:"50%" , height:"60%"}} className="bg-white p-8 rounded-lg shadow-lg items-center justify-center flex flex-col">
-        <h1 className="text-2xl font-bold text-center">Login</h1>
+        <h1 className="text-2xl font-bold text-center rounded-xl">Login</h1>
         <div style={{width:"100%"}} className="space-y-4 mt-4">
           {loginFormControls.map((controlItem) =>
             controlItem.componentType === "input" ? (
