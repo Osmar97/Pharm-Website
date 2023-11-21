@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ProductButton from "./ProductButtons";
 import { useEffect } from "react";
 import Notification from "../Notifications";
@@ -9,9 +9,13 @@ import ProductTile from "./ProductTile/Index";
 export default function CommonListing({ data }) {
   const router = useRouter();
 
+  const pathName = usePathname();
+
   useEffect(() => {
     router.refresh();
   }, []);
+
+  const isAdminView = pathName.includes("admin-view");
 
   return (
     <section className="bg-white py-12 sm:py-16">
@@ -23,7 +27,7 @@ export default function CommonListing({ data }) {
                   className="relative flex flex-col overflow-hidden cursor-pointer"
                   key={item._id}
                 >
-                  <ProductTile item={item} />
+                  <ProductTile item={item} isAdminView={isAdminView}/>
                   <ProductButton item={item} />
                 </article>
               ))

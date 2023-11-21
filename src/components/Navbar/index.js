@@ -123,7 +123,7 @@ export default function Navbar() {
               isAdminView ? (
                 <button
                   onClick={() => router.push("/")}
-                  className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                  className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-lg"
                 >
                   {" "}
                   Client View
