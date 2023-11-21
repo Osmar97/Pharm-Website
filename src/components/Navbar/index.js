@@ -90,6 +90,96 @@ export default function Navbar() {
 
   return (
     <>
+      <style jsx global>{`
+        .blob-btn {
+          position: relative;
+          z-index: 1;
+          padding: 15px 40px;
+          margin-top: 20px;
+          text-align: center;
+          text-transform: uppercase;
+          color: #1df221;
+          font-size: 13px;
+          font-weight: bold;
+          background-color: transparent;
+          outline: none;
+          border: none;
+          transition: color 0.5s;
+          cursor: pointer;
+          border-radius: 30px;
+        }
+
+        .blob-btn:before {
+          content: "";
+          z-index: 1;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          border: 2px solid #1df221;
+          border-radius: 30px;
+        }
+
+        .blob-btn:after {
+          content: "";
+          z-index: -2;
+          position: absolute;
+          left: 2px;
+          top: 2px;
+          width: 100%;
+          height: 100%;
+          transition: all 0.3s 0.2s;
+          border-radius: 30px;
+        }
+
+        .blob-btn:hover {
+          color: #ffffff;
+          border-radius: 30px;
+        }
+
+        .blob-btn:hover:after {
+          transition: all 0.3s;
+          left: 0;
+          top: 0;
+          border-radius: 30px;
+        }
+
+        .blob-btn__inner {
+          z-index: -1;
+          overflow: hidden;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 30px;
+          background: #ffffff;
+        }
+
+        .blob-btn__blobs {
+          position: relative;
+          display: block;
+          height: 100%;
+          filter: url("#goo");
+        }
+
+        .blob-btn__blob {
+          position: absolute;
+          top: 2px;
+          width: 100%;
+          height: 100%;
+          background: #1df221;
+          border-radius: 100%;
+          transform: translate3d(0, 150%, 0) scale(1.7);
+          transition: transform 0.45s;
+        }
+
+        .blob-btn:hover .blob-btn__blob {
+          transform: translateZ(0) scale(1.7);
+        }
+      `}</style>
+
       <nav className="bg-white fixed w-full z-20 top-0 left-0 ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <div className="flex items-center cursor-pointer">
@@ -150,10 +240,16 @@ export default function Navbar() {
               </button>
             ) : (
               <button
+                className="blob-btn"
                 onClick={() => router.push("/login")}
-                className="mt-1.5 inline-block bg-green-500 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-3xl"
               >
-                {" "}
+                <div className="blob-btn__inner">
+                  <div className="blob-btn__blobs">
+                    {[...Array(4)].map((_, index) => (
+                      <div key={index} className="blob-btn__blob" />
+                    ))}
+                  </div>
+                </div>
                 Login
               </button>
             )}
