@@ -15,7 +15,7 @@ export default function CommonDetails({ item }) {
     setShowCartModal,
   } = useContext(GlobalContext);
 
-  const [activeContent, setActiveContent] = useState("description")
+  const [activeContent, setActiveContent] = useState("description");
 
   async function handleAddToCart(getItem) {
     setComponentLevelLoader({ loading: true, id: "" });
@@ -121,7 +121,11 @@ export default function CommonDetails({ item }) {
                 {item && item.deliveryInfo}
               </li>
               <li className="mt-8 flex flex-col items-center space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
-                {"INFORMAÇÕES TÉCNICAS"}
+                {item.stock > 0 ? (
+                  <p className="text-green-500">Em Stock</p>
+                ) : (
+                  <p className="text-red-500">Sem Stock</p>
+                )}
               </li>
             </ul>
             <div className="lg:col-span-3">

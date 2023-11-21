@@ -1,6 +1,7 @@
 import connectToDB from "@/database";
 import AuthUser from "@/middleware/AuthUser";
 import Cart from "@/models/cart";
+import Product from "@/models/product";  // Import the Product model
 import Joi from "joi";
 import { NextResponse } from "next/server";
 
@@ -18,7 +19,7 @@ export async function POST(req) {
 
     if (isAuthUser) {
       const data = await req.json();
-      const {productID , userID} = data;
+      const { productID, userID } = data;
 
       const { error } = AddToCart.validate({ userID, productID });
 
@@ -29,15 +30,26 @@ export async function POST(req) {
         });
       }
 
-      console.log(productID, userID);
+      const productDetails = await Product.findById(productID);
+
+      if (!productDetails) {
+        return NextResponse.json({
+          success: false,
+          message: "Produto não encontrado",
+        });
+      }
+
+      if (productDetails.stock <= 0) {
+        return NextResponse.json({
+          success: false,
+          message: "Produto fora de stock",
+        });
+      }
 
       const isCurrentCartItemAlreadyExists = await Cart.find({
         productID: productID,
         userID: userID,
       });
-
-      console.log(isCurrentCartItemAlreadyExists);
-      
 
       if (isCurrentCartItemAlreadyExists?.length > 0) {
         return NextResponse.json({
@@ -49,8 +61,6 @@ export async function POST(req) {
 
       const saveProductToCart = await Cart.create(data);
 
-      console.log(saveProductToCart);
-
       if (saveProductToCart) {
         return NextResponse.json({
           success: true,
@@ -59,20 +69,21 @@ export async function POST(req) {
       } else {
         return NextResponse.json({
           success: false,
-          message: "Falha ao adicionar o produto ao carrinho! Por favor, tente novamente.",
+          message:
+            "Falha ao adicionar o produto ao carrinho! Por favor, tente novamente.",
         });
       }
     } else {
       return NextResponse.json({
         success: false,
-        message: "Não esta autorizado",
+        message: "Não está autorizado",
       });
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return NextResponse.json({
       success: false,
-      message: "Algo está errado, tente novamente mais tarde",
+      message: "Algo correu mal! Por favor, tente novamente.",
     });
   }
 }
