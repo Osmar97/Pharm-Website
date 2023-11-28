@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the 
 import { faSearch } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
 import CartModal from "../CartModal";
 
+
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
     <div
@@ -61,6 +62,7 @@ export default function Navbar() {
     currentUpdatedProduct,
     setCurrentUpdatedProduct,
     showCartModal,
+    setShowCartModal,
   } = useContext(GlobalContext);
 
   const router = useRouter();
@@ -205,7 +207,9 @@ export default function Navbar() {
                   />
                 </button>
                 <button title="Cart">
-                  <Cart width="30" height="30" style={{ fill: "darkgreen" }} />
+                  <Cart width="30" height="30" style={{ fill: "darkgreen" }} 
+                  onClick={()=> setShowCartModal(true)}
+                  />
                 </button>
               </Fragment>
             ) : null}
