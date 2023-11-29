@@ -1,22 +1,21 @@
 "use client";
 
 import { GlobalContext } from "@/context";
-import { adminNavOptions, navOptions, styles } from "@/utils";
+import { adminNavOptions, navOptions } from "@/utils";
 import { Fragment, useContext, useEffect } from "react";
 import CommonModal from "../CommonModal";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
-import Login from "@/app/login/page";
 import { Admin, Cart, Logout, Profile } from "../svgs";
 import Image from "next/image";
 import logo from "../img/logo3.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
-import { faSearch } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import CartModal from "../CartModal";
-
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
+    
     <div
       className={`items-center justify-between w-full md:flex md:w-auto ${
         isModalView ? "" : "hidden"
@@ -77,8 +76,6 @@ export default function Navbar() {
       setCurrentUpdatedProduct(null);
   }, [pathName]);
 
-  console.log(user, isAuthUser, "navbar");
-
   function handleLogout() {
     setIsAuthUser(false);
     setUser(null);
@@ -92,96 +89,6 @@ export default function Navbar() {
 
   return (
     <>
-      <style jsx global>{`
-        .blob-btn {
-          position: relative;
-          z-index: 1;
-          padding: 15px 40px;
-          margin-top: 20px;
-          text-align: center;
-          text-transform: uppercase;
-          color: #1df221;
-          font-size: 13px;
-          font-weight: bold;
-          background-color: transparent;
-          outline: none;
-          border: none;
-          transition: color 0.5s;
-          cursor: pointer;
-          border-radius: 30px;
-        }
-
-        .blob-btn:before {
-          content: "";
-          z-index: 1;
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          border: 2px solid #1df221;
-          border-radius: 30px;
-        }
-
-        .blob-btn:after {
-          content: "";
-          z-index: -2;
-          position: absolute;
-          left: 2px;
-          top: 2px;
-          width: 100%;
-          height: 100%;
-          transition: all 0.3s 0.2s;
-          border-radius: 30px;
-        }
-
-        .blob-btn:hover {
-          color: #ffffff;
-          border-radius: 30px;
-        }
-
-        .blob-btn:hover:after {
-          transition: all 0.3s;
-          left: 0;
-          top: 0;
-          border-radius: 30px;
-        }
-
-        .blob-btn__inner {
-          z-index: -1;
-          overflow: hidden;
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          border-radius: 30px;
-          background: #ffffff;
-        }
-
-        .blob-btn__blobs {
-          position: relative;
-          display: block;
-          height: 100%;
-          filter: url("#goo");
-        }
-
-        .blob-btn__blob {
-          position: absolute;
-          top: 2px;
-          width: 100%;
-          height: 100%;
-          background: #1df221;
-          border-radius: 100%;
-          transform: translate3d(0, 150%, 0) scale(1.7);
-          transition: transform 0.45s;
-        }
-
-        .blob-btn:hover .blob-btn__blob {
-          transform: translateZ(0) scale(1.7);
-        }
-      `}</style>
-
       <nav className="bg-white fixed w-full z-20 top-0 left-0 ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <div className="flex items-center cursor-pointer">
@@ -200,15 +107,11 @@ export default function Navbar() {
             {!isAdminView && isAuthUser ? (
               <Fragment>
                 <button style={{ marginRight: "10px" }} title="Profile">
-                  <Profile
-                    width="30"
-                    height="30"
-                    style={{ fill: "darkgreen" }}
-                  />
+                  <Profile width="30" height="30" style={{ fill: "darkgreen" }} />
                 </button>
                 <button title="Cart">
                   <Cart width="30" height="30" style={{ fill: "darkgreen" }} 
-                  onClick={()=> setShowCartModal(true)}
+                    onClick={() => setShowCartModal(true)}
                   />
                 </button>
               </Fragment>
@@ -258,9 +161,7 @@ export default function Navbar() {
               </button>
             )}
             <button
-              data-collapse-toggle="navbar-sticky"
               type="button"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-sticky"
               aria-expanded="false"
               onClick={() => setShowNavModal(!showNavModal)}
