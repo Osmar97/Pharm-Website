@@ -2,19 +2,14 @@
 
 import InputComponent from "@/components/FormElements/InputComponent";
 import ComponentLevelLoader from "@/components/Loader/componentlevel";
-import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
-import {
-  addNewAddress,
-  deleteAddress,
-  fetchAllAddresses,
-  updateAddress,
-} from "@/services/address";
 import { addNewAddressFormControls } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import { addNewAddress, deleteAddress, fetchAllAddresses, updateAddress } from "../services/address";
+import Notification from "@/components/Notifications";
 
 export default function Account() {
   const {
@@ -124,7 +119,7 @@ export default function Account() {
 
   return (
     <section>
-      <div className="mx-auto bg-gray-100 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto bg-gray-100 px-4 sm:px-6 lg:px-8 mt-16">
         <div className="bg-white shadow">
           <div className="p-6 sm:p-12">
             <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
@@ -138,10 +133,10 @@ export default function Account() {
               <p>{user?.role}</p>
             </div>
             <button onClick={()=>router.push('/orders')} className="mt-5  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide">
-              View Your Orders
+                Ver Suas Encomendas
             </button>
             <div className="mt-6">
-              <h1 className="font-bold text-lg">Your Addresses :</h1>
+              <h1 className="font-bold text-lg">Seus Endereços :</h1>
               {pageLevelLoader ? (
                 <PulseLoader
                   color={"#000000"}
@@ -163,7 +158,7 @@ export default function Account() {
                           onClick={() => handleUpdateAddress(item)}
                           className="mt-5 mr-5 inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
                         >
-                          Update
+                          Atualizar
                         </button>
                         <button
                           onClick={() => handleDelete(item._id)}
@@ -173,7 +168,7 @@ export default function Account() {
                           componentLevelLoader.loading &&
                           componentLevelLoader.id === item._id ? (
                             <ComponentLevelLoader
-                              text={"Deleting"}
+                              text={"A eliminar"}
                               color={"#ffffff"}
                               loading={
                                 componentLevelLoader &&
@@ -181,13 +176,13 @@ export default function Account() {
                               }
                             />
                           ) : (
-                            "Delete"
+                            "Eliminar"
                           )}
                         </button>
                       </div>
                     ))
                   ) : (
-                    <p>No address found ! Please add a new address below</p>
+                    <p>Nenhum endereço encontrado! Por favor, adicione um novo endereço abaixo</p>
                   )}
                 </div>
               )}
@@ -197,7 +192,7 @@ export default function Account() {
                 onClick={() => setShowAddressForm(!showAddressForm)}
                 className="mt-5  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
               >
-                {showAddressForm ? "Hide Address Form" : "Add New Address"}
+                {showAddressForm ? "Ocultar Formulário de Endereço" : "Adicionar Novo Endereço"}
               </button>
             </div>
             {showAddressForm ? (
@@ -224,14 +219,14 @@ export default function Account() {
                 >
                   {componentLevelLoader && componentLevelLoader.loading ? (
                     <ComponentLevelLoader
-                      text={"Saving"}
+                      text={"A guardar"}
                       color={"#ffffff"}
                       loading={
                         componentLevelLoader && componentLevelLoader.loading
                       }
                     />
                   ) : (
-                    "Save"
+                    "Guardar"
                   )}
                 </button>
               </div>
@@ -239,7 +234,7 @@ export default function Account() {
           </div>
         </div>
       </div>
-      <Notification />
+      <Notification/>
     </section>
   );
 }
