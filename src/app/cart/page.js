@@ -2,10 +2,10 @@
 
 import CommonCart from "@/components/CommonCart";
 import { GlobalContext } from "@/context";
+import { deleteFromCart, getAllCartItems } from "@/services/cart";
 import { useContext, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { deleteFromCart, getAllCartItems } from "../services/cart";
 
 export default function Cart() {
   const {

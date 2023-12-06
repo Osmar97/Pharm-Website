@@ -1,12 +1,11 @@
 "use client";
-
-import Notification from "@/components/Notification";
+import Notification from "@/components/Notifications";
 import { GlobalContext } from "@/context";
-import { getAllOrdersForUser } from "@/services/order";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import { getAllOrdersForAllUsers } from "../services/order";
 
 export default function Orders() {
   const {
@@ -21,7 +20,7 @@ export default function Orders() {
 
   async function extractAllOrders() {
     setPageLevelLoader(true);
-    const res = await getAllOrdersForUser(user?._id);
+    const res = await getAllOrdersForAllUsers(user?._id);
 
     if (res.success) {
       setPageLevelLoader(false);
@@ -121,7 +120,7 @@ export default function Orders() {
           </div>
         </div>
       </div>
-      <Notification />
+      <Notification/>
     </section>
   );
 }
