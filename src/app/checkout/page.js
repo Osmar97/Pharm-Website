@@ -115,10 +115,10 @@ export default function Checkout() {
       ...checkoutFormData,
       shippingAddress: {
         ...checkoutFormData.shippingAddress,
-        fullName: getAddress.fullName,
-        city: getAddress.city,
-        country: getAddress.country,
-        postalCode: getAddress.postalCode,
+        nomeCompleto: getAddress.nomeCompleto,
+        cidade: getAddress.cidade,
+        pais: getAddress.pais,
+        codigoPostal: getAddress.codigoPostal,
         address: getAddress.address,
       },
     });
@@ -242,9 +242,9 @@ export default function Checkout() {
                 >
                   <p>Nome: {item.nomeCompleto}</p>
                   <p>Endereço: {item.address}</p>
-                  <p>Cidade: {item.city}</p>
-                  <p>País: {item.country}</p>
-                  <p>Código Postal: {item.postalCode}</p>
+                  <p>Cidade: {item.cidade}</p>
+                  <p>País: {item.pais}</p>
+                  <p>Código Postal: {item.codigoPostal}</p>
                   <button className="mt-5 mr-5 inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide">
                     {item._id === selectedAddress
                       ? "Endereço Selecionado"

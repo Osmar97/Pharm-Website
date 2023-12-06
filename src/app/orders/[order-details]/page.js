@@ -54,7 +54,7 @@ export default function OrderDetails() {
     <div className="py-14 px-4 md:px-6">
       <div className="flex justify-start items-start space-y-2 flex-col">
         <h1 className="text-3xl lg:text-4xl font-bold leading-7 lg:leading-9 text-gray-900">
-          Order #{orderDetails && orderDetails._id}
+          Pedido #{orderDetails && orderDetails._id}
         </h1>
         <p className="text-base font-medium leadong-6 text-gray-600">
           {orderDetails &&
@@ -69,7 +69,7 @@ export default function OrderDetails() {
       <div className="mt-10 flex flex-col justify-center xl:flex-row items-stretch w-full xl:space-x-8 md:space-y-6 xl:space-y-0">
         <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
           <div className="flex flex-col justify-start items-start bg-gray-50 px-4 py-4 md:p-6 xl:p-8 w-full">
-            <p className="font-bol text-lg ">Your order summary</p>
+            <p className="font-bol text-lg ">Resumo do pedido</p>
             {orderDetails &&
             orderDetails.orderItems &&
             orderDetails.orderItems.length
@@ -129,12 +129,12 @@ export default function OrderDetails() {
         <div className="flex flex-col gap-5">
           <div className="bg-gray-50 w-full xl:w-96 flex  items-center md:items-start px-4 py-6 flex-col">
             <h3 className="text-xl font-semibold leading-6 text-gray-900">
-              Customer Details
+              Detalhes do cliente
             </h3>
             <div className="flex flex-col justify-start items-start flex-shrink-0">
               <div className="flex gap-4 justify-center flex-col w-full md:justify-start   py-8 border-b border-gray-200">
                 <p className="text-base font-semibold leading-4 text-left text-gray-950">
-                  Name: {user?.name}
+                  Nome: {user?.name}
                 </p>
                 <p className="text-base font-semibold leading-4 text-left text-gray-950">
                   Email: {user?.email}
@@ -147,17 +147,17 @@ export default function OrderDetails() {
               <div className="flex justify-center md:justify-start items-center md:items-start flex-col space-y-4 xl:mt-8">
                 <p>Shipping Address</p>
                 <p>
-                  Address :{" "}
+                  Endereço :{" "}
                   {orderDetails && orderDetails.shippingAddress.address}
                 </p>
-                <p>City :{orderDetails && orderDetails.shippingAddress.city}</p>
+                <p>Cidade :{orderDetails && orderDetails.shippingAddress.cidade}</p>
                 <p>
                   Country :{" "}
-                  {orderDetails && orderDetails.shippingAddress.country}
+                  {orderDetails && orderDetails.shippingAddress.pais}
                 </p>
                 <p>
-                  Postal Code :{" "}
-                  {orderDetails && orderDetails.shippingAddress.postalCode}
+                  Codigo Postal :{" "}
+                  {orderDetails && orderDetails.shippingAddress.codigoPostal}
                 </p>
               </div>
             </div>
@@ -166,7 +166,7 @@ export default function OrderDetails() {
             onClick={() => router.push(`/`)}
             className="mt-5 mr-5  inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
           >
-            Shop Again
+            Voltar as compras
           </button>
         </div>
       </div>
