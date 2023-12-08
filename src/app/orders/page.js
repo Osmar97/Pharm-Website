@@ -1,11 +1,12 @@
 "use client";
+
 import Notification from "@/components/Notifications";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { getAllOrdersForAllUsers } from "../services/order";
+import { getAllOrdersForUser } from "../services/order";
 
 export default function Orders() {
   const {
@@ -20,7 +21,7 @@ export default function Orders() {
 
   async function extractAllOrders() {
     setPageLevelLoader(true);
-    const res = await getAllOrdersForAllUsers(user?._id);
+    const res = await getAllOrdersForUser(user?._id);
 
     if (res.success) {
       setPageLevelLoader(false);
@@ -79,7 +80,7 @@ export default function Orders() {
                               Total paid amount
                             </p>
                             <p className="mr-3 text-2xl  font-semibold text-gray-900">
-                              ${item.totalPrice}
+                              {item.totalPrice}€
                             </p>
                           </div>
                         </div>

@@ -208,6 +208,7 @@ export default function Navbar() {
                     width="30"
                     height="30"
                     style={{ fill: "darkgreen" }}
+                    onClick={()=>router.push('/account')}
                   />
                 </button>
                 <button title="Cart">
