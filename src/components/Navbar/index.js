@@ -69,6 +69,10 @@ export default function Navbar() {
 
   const pathName = usePathname();
 
+  const handleToggleCartModal = () => {
+    setShowCartModal((prev) => !prev);
+  };
+
   useEffect(() => {
     if (
       pathName !== "/admin-view/add-product" &&
@@ -207,9 +211,10 @@ export default function Navbar() {
                   />
                 </button>
                 <button title="Cart">
-                  <Cart width="30" height="30" style={{ fill: "darkgreen" }} 
-                  onClick={()=> setShowCartModal(true)}
+                  <Cart width="30" height="30" style={{ fill: "darkgreen" }}
+                  onClick={handleToggleCartModal}
                   />
+                   {showCartModal && <CartModal setShowCartModal={setShowCartModal} />}
                 </button>
               </Fragment>
             ) : null}

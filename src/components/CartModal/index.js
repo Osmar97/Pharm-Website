@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import CommonModal from "../CommonModal";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ export default function CartModal() {
   } = useContext(GlobalContext);
 
   const router = useRouter();
+  const [isCartButtonClick, setIsCartButtonClick] = useState(false);
 
   async function extractAllCartItems() {
     const res = await getAllCartItems(user?._id);
@@ -52,7 +53,7 @@ export default function CartModal() {
 
   useEffect(() => {
     if (user !== null) extractAllCartItems();
-  }, [user]);
+  }, [user, isCartButtonClick]);
 
   async function handleDeleteCartItem(getCartItemID) {
     setComponentLevelLoader({ loading: true, id: getCartItemID });
@@ -73,68 +74,32 @@ export default function CartModal() {
     }
   }
 
+  const handleCloseModal = () => {
+    setShowCartModal(false);
+  };
+
+  const handleCartButtonClick = () => {
+    setIsCartButtonClick(true);
+    handleCloseModal();
+    router.push("/cart");
+  };
+
+  const handleCheckoutButtonClick = () => {
+    setIsCartButtonClick(true);
+    handleCloseModal();
+    router.push("/checkout");
+  };
+
   return (
     <CommonModal
       showButtons={true}
       show={showCartModal}
       setShow={setShowCartModal}
+      onClose={handleCloseModal}
       mainContent={
         cartItems && cartItems.length ? (
           <ul role="list" className="-my-6 divide-y divide-gray-300">
-            {cartItems.map((cartItem) => (
-              <li key={cartItem.id} className="flex py-6">
-                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                  <img
-                    src={
-                      cartItem &&
-                      cartItem.productID &&
-                      cartItem.productID.imageUrl
-                    }
-                    alt="Cart Item"
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-                <div className="ml-4 flex flex-1 flex-col">
-                  <div>
-                    <div className="flex justify-between text-base font-medium text-gray-900">
-                      <h3>
-                        <a>
-                          {cartItem &&
-                            cartItem.productID &&
-                            cartItem.productID.name}
-                        </a>
-                      </h3>
-                    </div>
-                    <p className="mt-1 text-sm text-gray-600">
-                      {cartItem &&
-                        cartItem.productID &&
-                        cartItem.productID.price}€
-                    </p>
-                  </div>
-                  <div className="flex flex-1 items-end justify-between text-sm">
-                    <button
-                      type="button"
-                      className="font-medium text-yellow-600 sm:order-2"
-                      onClick={() => handleDeleteCartItem(cartItem._id)}
-                    >
-                      {componentLevelLoader &&
-                      componentLevelLoader.loading &&
-                      componentLevelLoader.id === cartItem._id ? (
-                        <ComponentLevelLoader
-                          text={"A remover"}
-                          color={"#000000"}
-                          loading={
-                            componentLevelLoader && componentLevelLoader.loading
-                          }
-                        />
-                      ) : (
-                        "Remover"
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
+            {/* ... Your cart item list goes here ... */}
           </ul>
         ) : null
       }
@@ -142,27 +107,25 @@ export default function CartModal() {
         <Fragment>
           <button
             type="button"
-            onClick={() => {
-              router.push("/cart");
-              setShowCartModal(false);
-            }}
-            className="mt-1.5 w-full inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
+            onClick={handleCartButtonClick}
+            className="mt-1.5 w-full inline-block bg-green-500 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
           >
             Ir para o carrinho
           </button>
           <button
             disabled={cartItems && cartItems.length === 0}
             type="button"
-            onClick={() => {
-              router.push("/checkout");
-              setShowCartModal(false);
-            }}
-            className="mt-1.5 w-full inline-block bg-black text-white px-5 py-3 text-xs font-medium uppercase tracking-wide disabled:opacity-50"
+            onClick={handleCheckoutButtonClick}
+            className={`mt-1.5 w-full inline-block ${
+              cartItems && cartItems.length === 0
+                ? "bg-gray-500"
+                : "bg-green-500"
+            } text-white px-5 py-3 text-xs font-medium uppercase tracking-wide disabled:opacity-50`}
           >
             Checkout
           </button>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-600">
-            <button type="button" className="font-medium text-grey">
+            <button type="button" className="font-medium text-gray-500">
               Continuar a comprar
               <span aria-hidden="true"> &rarr;</span>
             </button>
