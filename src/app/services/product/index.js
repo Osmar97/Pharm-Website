@@ -27,7 +27,7 @@ export const getAllAdminProducts = async () => {
     });
 
     const data = await res.json();
-
+    console.log(data,'aquiiiii')
     return data;
   } catch (error) {
     console.log(error);

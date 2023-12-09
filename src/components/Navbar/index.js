@@ -215,7 +215,7 @@ export default function Navbar() {
                   <Cart width="30" height="30" style={{ fill: "darkgreen" }}
                   onClick={handleToggleCartModal}
                   />
-                   {showCartModal && <CartModal setShowCartModal={setShowCartModal} />}
+                   {/* {showCartModal && <CartModal setShowCartModal={setShowCartModal} />} */}
                 </button>
               </Fragment>
             ) : null}
@@ -325,7 +325,7 @@ export default function Navbar() {
         show={showNavModal}
         setShow={setShowNavModal}
       />
-      {showCartModal && <CartModal />}
+      {showCartModal && <CartModal showCartModal={showCartModal} setShowCartModal={setShowCartModal}/>}
     </>
   );
 }

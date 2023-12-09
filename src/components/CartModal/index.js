@@ -9,6 +9,10 @@ import ComponentLevelLoader from "../Loader/componentlevel";
 import { useRouter } from "next/navigation";
 
 export default function CartModal() {
+
+ 
+ 
+
   const {
     showCartModal,
     setShowCartModal,
@@ -22,9 +26,13 @@ export default function CartModal() {
   const router = useRouter();
 
   async function extractAllCartItems() {
+    
     const res = await getAllCartItems(user?._id);
 
+
+    
     if (res.success) {
+      
       const updatedData =
         res.data && res.data.length
           ? res.data.map((item) => ({
@@ -47,12 +55,14 @@ export default function CartModal() {
       localStorage.setItem("cartItems", JSON.stringify(updatedData));
     }
 
-    console.log(res);
   }
 
   useEffect(() => {
     if (user !== null) extractAllCartItems();
   }, [user]);
+
+   
+    
 
   async function handleDeleteCartItem(getCartItemID) {
     setComponentLevelLoader({ loading: true, id: getCartItemID });
@@ -72,6 +82,13 @@ export default function CartModal() {
       setComponentLevelLoader({ loading: false, id: getCartItemID });
     }
   }
+ 
+  function handleMudarRota(route){
+    router.push(route)
+    setShowCartModal(false)
+  }
+
+ 
 
   return (
     <CommonModal
@@ -81,8 +98,9 @@ export default function CartModal() {
       mainContent={
         cartItems && cartItems.length ? (
           <ul role="list" className="-my-6 divide-y divide-gray-300">
-            {cartItems.map((cartItem) => (
-              <li key={cartItem.id} className="flex py-6">
+            {cartItems.map((cartItem) => {
+
+             return ( <li key={cartItem._id} className="flex py-6">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
                     src={
@@ -134,7 +152,9 @@ export default function CartModal() {
                   </div>
                 </div>
               </li>
-            ))}
+
+            )
+            })}
           </ul>
         ) : null
       }
@@ -142,10 +162,7 @@ export default function CartModal() {
         <Fragment>
           <button
             type="button"
-            onClick={() => {
-              router.push("/cart");
-              setShowCartModal(false);
-            }}
+            onClick={()=>handleMudarRota('/cart')}
             className="mt-1.5 w-full inline-block bg-green-500 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
           >
             Ir para o carrinho
@@ -153,10 +170,8 @@ export default function CartModal() {
           <button
             disabled={cartItems && cartItems.length === 0}
             type="button"
-            onClick={() => {
-              router.push("/checkout");
-              setShowCartModal(false);
-            }}
+            onClick={()=>handleMudarRota('/checkout')}
+
             className="mt-1.5 w-full inline-block bg-gray-500 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide disabled:opacity-50"
           >
             Checkout
