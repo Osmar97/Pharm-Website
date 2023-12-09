@@ -66,14 +66,13 @@ export default function Register() {
   }, [isAuthUser]);
 
   return (
-    <div className="bg-gradient-to-b from-blue-200 to-blue-500 h-screen flex items-center justify-center">
+<div className="bg-gradient-to-b from-blue-100 to-blue-500 h-screen flex items-center justify-center mt-14">
       <div style={{width:"50%"}} className="bg-white p-8 rounded-xl shadow-lg ">
         <h1 className="text-2xl font-bold text-center ">
           {isRegistered ? "Registrado com sucesso" : "Registo"}
         </h1>
         {isRegistered ? (
           <button
-          
             className="bg-green-500 rounded-full text-white py-3 px-6 mt-4 w-full "
             onClick={() => router.push("/login")}
           >
@@ -95,6 +94,9 @@ export default function Register() {
                     });
                   }}
                   value={formData[controlItem.id]}
+                  rounded="rounded"
+                  bgColor="bg-gray-100"
+                  focusBorderColor="focus:border-blue-500"
                 />
               ) : controlItem.componentType === "select" ? (
                 <SelectComponent
@@ -108,6 +110,9 @@ export default function Register() {
                     });
                   }}
                   value={formData[controlItem.id]}
+                  rounded="rounded"
+                  bgColor="bg-gray-100"
+                  focusBorderColor="focus:border-blue-500"
                 />
               ) : null
             )}

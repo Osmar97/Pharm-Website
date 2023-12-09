@@ -62,7 +62,7 @@ const initialFormData = {
   category: "men",
   size: "",
   deliveryInfo: "",
-  onSale: "não",
+  onSale: "nao",
   imageUrl: "",
   priceDrop: 0,
   modoDeUso: "",
