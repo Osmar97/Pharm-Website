@@ -41,13 +41,13 @@ export default function Home() {
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 sm:p-16 bg-gray-100 mt-20">
-      <section>
+    <main className="flex min-h-screen flex-col items-center  sm:p-16 bg-gray-100 mt-20">
+      <section style={{margin:"0"}}>
         <div>
         <Slider/>
         </div>
       </section>
-      <section className="">
+      <section style={{marginTop:"20px"}}>
         <div className="max-w-screen-xl mx-auto">
           <ul className="grid grid-cols-1 gap-4 lg:grid-cols-5 justify-center items-center">
             {categories.map((category) => (
