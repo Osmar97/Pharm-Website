@@ -59,7 +59,7 @@ export default function Home() {
                       alt={category.name}
                       width={120}
                       height={120}
-                      className="object-cover w-full h-20 rounded-full"
+                      className="object-cover w-full h-36 rounded-full"
                     />
                   </div>
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
@@ -83,6 +83,27 @@ export default function Home() {
           </ul>
         </div>
       </section>
+      <footer className="text-center mt-8">
+        <div className="flex justify-center space-x-4">
+        
+          <div className="text-center">
+            <p className="text-sm text-gray-500">Apoio ao Cliente</p>
+            <ul className="text-sm text-gray-500">
+              <li>Contactos</li>
+              <li>FAQ's: Perguntas Frequentes</li>
+              <li>Política de Privacidade</li>
+              <li>Termos & Condições Farmácia Lobo</li>
+              <li>Aderir ao Cartão Saúda</li>
+              <li>Condições Gerais de Utilização do Cartão Saúda</li>
+              <li>Livro de reclamações</li>
+              <li>Ajustar configurações de cookies</li>
+            </ul>
+          </div>
+        </div>
+        <p className="text-sm text-gray-500">
+          © 2023 Farmácia Lobo. Todos os medicamentos expostos são a título de catálogo. Autorizado a disponibilizar MNSRM e MSRM mediante receita médica, através da Internet, pelo Infarmed.
+        </p>
+      </footer>
     </main>
   );
 }
