@@ -19,7 +19,7 @@ export default function Cart() {
   } = useContext(GlobalContext);
 
   async function extractAllCartItems() {
-    setPageLevelLoader(true);
+    setPageLevelLoader(false);
     const res = await getAllCartItems(user?._id);
 
     if (res.success) {

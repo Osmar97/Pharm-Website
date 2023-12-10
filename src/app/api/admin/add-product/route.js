@@ -17,7 +17,7 @@ const addNewProductSchema = Joi.object({
   priceDrop: Joi.number().required(),
   modoDeUso: Joi.string().required(),
   conservacao: Joi.string().required(),
-  stock: Joi.number().integer().min(0).required(),
+  stock: Joi.number().integer().min(1).required(),
 });
 
 export const dynamic = "force-dynamic";
