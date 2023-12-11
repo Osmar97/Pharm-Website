@@ -127,6 +127,8 @@ export default function Checkout() {
   async function handleCheckout() {
     const stripe = await stripePromise;
 
+    console.log(handleCheckout , "aquioosodfsdf")
+
     const createLineItems = cartItems.map((item) => ({
       price_data: {
         currency: "eur",
@@ -225,7 +227,7 @@ export default function Checkout() {
             )}
           </div>
         </div>
-        <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+        <div className=" mt-10 bg-gray-50 px-4 pt-8 lg:mt-0" style={{marginTop:"60px"}}>
           <p className="text-xl font-medium">Detalhes do Endereço de Envio</p>
           <p className="text-gray-400 font-bold">
             Complete a sua encomenda selecionando um endereço abaixo
@@ -293,7 +295,7 @@ export default function Checkout() {
               <button
                 disabled={
                   (cartItems && cartItems.length === 0) ||
-                  Object.keys(checkoutFormData.shippingAddress).length === 0
+                  (!checkoutFormData || Object.keys(checkoutFormData).length === 0)
                 }
                 onClick={handleCheckout}
                 className="disabled:opacity-50 mt-5 mr-5 w-full  inline-block bg-green-500 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"
