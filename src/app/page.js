@@ -11,6 +11,7 @@ import woman from "@/components/img/img3.jpg";
 import bela from "@/components/img/img4.jpg";
 import Slider from "@/components/slider";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ban from "@/components/img/pharmacy_banner.png";
 
 export default function Home() {
   const { isAuthUser } = useContext(GlobalContext);
@@ -34,18 +35,27 @@ export default function Home() {
   }, []);
 
   const ProductCard = ({ product }) => (
-    <div className="p-4 border border-gray-300 rounded-lg">
-      <Image
-        src={product.imageUrl} // Assuming you have an "imageUrl" property in your product data
-        alt={product.name}
-        width={200}
-        height={200}
-        className="object-cover w-full h-36 rounded-full mb-4"
-      />
+    <div className="p-4 border border-gray-300 rounded-lg cursor-pointer">
+      {product.imageUrl && (
+        <Image
+          src={product.imageUrl}
+          alt={product.name}
+          width={200}
+          height={200}
+          className="object-cover w-full h-36 rounded-full mb-4"
+          onClick={() => router.push(`/product/details/${product.id}`)}
+        />
+      )}
       <p className="text-lg font-medium mb-2">{product.name}</p>
-      <p className="text-gray-500">{product.description}</p>
+      {product.description && (
+        <p className="text-gray-500">{product.description}</p>
+      )}
+      {product.price !== undefined && (
+        <p className="text-green-500 mt-2">{`€${product.price.toFixed(2)}`}</p>
+      )}
     </div>
   );
+  
 
   const categories = [
     { name: "SAUDE", image: saudei },
@@ -82,8 +92,6 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center sm:p-16 bg-gray-100 mt-20">
       <Slider />
-
-      {/* Featured Section */}
       <section className="mt-12">
         <h2 className="text-3xl font-semibold mb-6">Destaques</h2>
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-4 lg:grid-cols-4 justify-center items-center">
@@ -92,8 +100,9 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* Suggestions Section */}
+      <section className="mt-12">
+        <Image src={ban} className=" rounded-3xl" />
+      </section>
       <section className="mt-12">
         <h2 className="text-3xl font-semibold mb-6">Sugestões</h2>
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-4 lg:grid-cols-4 justify-center items-center">
@@ -102,8 +111,9 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* Trending Section */}
+      <section className="mt-12">
+        <Image src={ban} className=" rounded-3xl" />
+      </section>
       <section className="mt-12">
         <h2 className="text-3xl font-semibold mb-6">Em Tendência</h2>
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-4 lg:grid-cols-4 justify-center items-center">
@@ -120,10 +130,8 @@ export default function Home() {
             <ul className="text-sm">
               <li>Contactos</li>
               <li>FAQ's: Perguntas Frequentes</li>
-              {/* Other footer links... */}
             </ul>
           </div>
-          {/* Other footer sections... */}
         </div>
         <p className="text-sm mt-8">
           © 2023 Farmácia Lobo. Todos os medicamentos expostos são a título de
