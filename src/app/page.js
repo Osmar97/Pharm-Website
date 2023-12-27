@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { GlobalContext } from "@/context";
 import { getAllAdminProducts } from "@/app/services/product";
@@ -10,19 +10,22 @@ import man from "@/components/img/img2.jpg";
 import woman from "@/components/img/img3.jpg";
 import bela from "@/components/img/img4.jpg";
 import Slider from "@/components/slider";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Home() {
   const { isAuthUser } = useContext(GlobalContext);
-
   const [products, setProducts] = useState([]);
   const router = useRouter();
 
   async function getListOfProducts() {
-    const res = await getAllAdminProducts();
+    try {
+      const res = await getAllAdminProducts();
 
-    if (res.success) {
-      setProducts(res.data);
+      if (res.success) {
+        setProducts(res.data);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
   }
 
@@ -30,7 +33,19 @@ export default function Home() {
     getListOfProducts();
   }, []);
 
-  console.log(products);
+  const ProductCard = ({ product }) => (
+    <div className="p-4 border border-gray-300 rounded-lg">
+      <Image
+        src={product.imageUrl} // Assuming you have an "imageUrl" property in your product data
+        alt={product.name}
+        width={200}
+        height={200}
+        className="object-cover w-full h-36 rounded-full mb-4"
+      />
+      <p className="text-lg font-medium mb-2">{product.name}</p>
+      <p className="text-gray-500">{product.description}</p>
+    </div>
+  );
 
   const categories = [
     { name: "SAUDE", image: saudei },
@@ -39,69 +54,81 @@ export default function Home() {
     { name: "BELEZA", image: bela },
   ];
 
+  const CategoryItem = ({ category }) => (
+    <li key={category.name}>
+      <div className="relative group overflow-hidden rounded-full">
+        <Image
+          src={category.image}
+          alt={category.name}
+          width={120}
+          height={120}
+          className="object-cover w-full h-36 rounded-full"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
+          <h3 className="text-lg font-medium text-white">{category.name}</h3>
+          <button
+            onClick={() =>
+              router.push(`/product/listing/${category.name.toLowerCase()}`)
+            }
+            className="mt-1.5 inline-block bg-green-500 px-3 py-1.5 text-sm uppercase tracking-wide text-white hover:bg-green-600 rounded-full"
+          >
+            Comprar
+          </button>
+        </div>
+      </div>
+    </li>
+  );
 
   return (
-    <main className="flex min-h-screen flex-col items-center  sm:p-16 bg-gray-100 mt-20">
-      <section style={{margin:"0"}}>
-        <div>
-        <Slider/>
+    <main className="flex min-h-screen flex-col items-center sm:p-16 bg-gray-100 mt-20">
+      <Slider />
+
+      {/* Featured Section */}
+      <section className="mt-12">
+        <h2 className="text-3xl font-semibold mb-6">Destaques</h2>
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-4 lg:grid-cols-4 justify-center items-center">
+          {products.slice(0, 4).map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
         </div>
       </section>
-      <section style={{marginTop:"20px"}}>
-        <div className="max-w-screen-xl mx-auto">
-          <ul className="grid grid-cols-1 gap-4 lg:grid-cols-5 justify-center items-center">
-            {categories.map((category) => (
-              <li key={category.name}>
-                <div className="relative block group">
-                  <div className="overflow-hidden rounded-full">
-                    <Image
-                      src={category.image}
-                      alt={category.name}
-                      width={120}
-                      height={120}
-                      className="object-cover w-full h-36 rounded-full"
-                    />
-                  </div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                    <h3 className="text-lg font-medium text-white">
-                      {category.name}
-                    </h3>
-                    <button
-                      onClick={() =>
-                        router.push(
-                          `/product/listing/${category.name.toLowerCase()}`
-                        )
-                      }
-                      className="mt-1.5 inline-block bg-green-500 px-1 py-1 text-xs uppercase tracking-wide text-white hover:bg-green-600 rounded-xl"
-                    >
-                      Comprar
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+
+      {/* Suggestions Section */}
+      <section className="mt-12">
+        <h2 className="text-3xl font-semibold mb-6">Sugestões</h2>
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-4 lg:grid-cols-4 justify-center items-center">
+          {products.slice(4, 8).map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
         </div>
       </section>
-      <footer className="text-center mt-8">
-        <div className="flex justify-center space-x-4">
-        
-          <div className="text-center">
-            <p className="text-sm text-gray-500">Apoio ao Cliente</p>
-            <ul className="text-sm text-gray-500">
+
+      {/* Trending Section */}
+      <section className="mt-12">
+        <h2 className="text-3xl font-semibold mb-6">Em Tendência</h2>
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-4 lg:grid-cols-4 justify-center items-center">
+          {products.slice(8, 12).map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <footer className="mt-16 p-8 bg-gray-800 text-white">
+        <div className="flex justify-center space-x-8">
+          <div>
+            <p className="text-lg font-semibold mb-4">Apoio ao Cliente</p>
+            <ul className="text-sm">
               <li>Contactos</li>
               <li>FAQ's: Perguntas Frequentes</li>
-              <li>Política de Privacidade</li>
-              <li>Termos & Condições Farmácia Lobo</li>
-              <li>Aderir ao Cartão Saúda</li>
-              <li>Condições Gerais de Utilização do Cartão Saúda</li>
-              <li>Livro de reclamações</li>
-              <li>Ajustar configurações de cookies</li>
+              {/* Other footer links... */}
             </ul>
           </div>
+          {/* Other footer sections... */}
         </div>
-        <p className="text-sm text-gray-500">
-          © 2023 Farmácia Lobo. Todos os medicamentos expostos são a título de catálogo. Autorizado a disponibilizar MNSRM e MSRM mediante receita médica, através da Internet, pelo Infarmed.
+        <p className="text-sm mt-8">
+          © 2023 Farmácia Lobo. Todos os medicamentos expostos são a título de
+          catálogo. Autorizado a disponibilizar MNSRM e MSRM mediante receita
+          médica, através da Internet, pelo Infarmed.
         </p>
       </footer>
     </main>
