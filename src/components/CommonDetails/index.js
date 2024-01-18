@@ -7,7 +7,8 @@ import ComponentLevelLoader from "../Loader/componentlevel";
 import { addToCart } from "@/app/services/cart";
 import Notification from "../Notifications";
 
-export default function CommonDetails({ item }) {
+export default  function CommonDetails({ item }) {
+
   const {
     setComponentLevelLoader,
     componentLevelLoader,

@@ -43,7 +43,7 @@ export default function Home() {
           width={200}
           height={200}
           className="object-cover w-full h-36 rounded-full mb-4"
-          onClick={() => router.push(`/product/details/${product.id}`)}
+          onClick={() => router.push(`/product/${product._id}`)}
         />
       )}
       <p className="text-lg font-medium mb-2">{product.name}</p>
@@ -88,6 +88,8 @@ export default function Home() {
       </div>
     </li>
   );
+
+  console.log(products,"nmasklfafnmlkf")
 
   return (
     <main className="flex min-h-screen flex-col items-center sm:p-16 bg-gray-100 mt-20">
