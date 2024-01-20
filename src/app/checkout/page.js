@@ -17,8 +17,8 @@ export default function Checkout() {
     user,
     addresses,
     setAddresses,
-    checkoutFormData,
-    setCheckoutFormData,
+    addressFormData,
+    setAddressFormData,
   } = useContext(GlobalContext);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -57,13 +57,15 @@ export default function Checkout() {
         cartItems.length > 0
       ) {
         setIsOrderProcessing(true);
-        const getCheckoutFormData = JSON.parse(
-          localStorage.getItem("checkoutFormData")
+        const getAddressFormData = JSON.parse(
+          localStorage.getItem("AddressFormData")
         );
 
-        const createFinalCheckoutFormData = {
+        console.log(getAddressFormData,"fhkhjk|||")
+
+        const createFinalAddressFormData = {
           user: user?._id,
-          shippingAddress: getCheckoutFormData.shippingAddress,
+          shippingAddress: getAddressFormData.shippingAddress,
           orderItems: cartItems.map((item) => ({
             qty: 1,
             product: item.productID,
@@ -78,7 +80,7 @@ export default function Checkout() {
           paidAt: new Date(),
         };
 
-        const res = await createNewOrder(createFinalCheckoutFormData);
+        const res = await createNewOrder(createFinalAddressFormData);
 
         if (res.success) {
           setIsOrderProcessing(false);
@@ -100,10 +102,11 @@ export default function Checkout() {
   }, [params.get("status"), cartItems]);
 
   function handleSelectedAddress(getAddress) {
+
+    debugger
     if (getAddress._id === selectedAddress) {
       setSelectedAddress(null);
-      setCheckoutFormData({
-        ...checkoutFormData,
+      setAddressFormData({
         shippingAddress: {},
       });
 
@@ -111,10 +114,8 @@ export default function Checkout() {
     }
 
     setSelectedAddress(getAddress._id);
-    setCheckoutFormData({
-      ...checkoutFormData,
+    setAddressFormData({
       shippingAddress: {
-        ...checkoutFormData.shippingAddress,
         nomeCompleto: getAddress.nomeCompleto,
         cidade: getAddress.cidade,
         pais: getAddress.pais,
@@ -144,7 +145,7 @@ export default function Checkout() {
     const res = await callStripeSession(createLineItems);
     setIsOrderProcessing(true);
     localStorage.setItem("stripe", true);
-    localStorage.setItem("checkoutFormData", JSON.stringify(checkoutFormData));
+    localStorage.setItem("AddressFormData", JSON.stringify(addressFormData));
 
     const { error } = await stripe.redirectToCheckout({
       sessionId: res.id,
@@ -153,7 +154,7 @@ export default function Checkout() {
     console.log(error);
   }
 
-  console.log(checkoutFormData);
+  console.log(addressFormData);
 
   useEffect(() => {
     if (orderSuccess) {
@@ -295,7 +296,7 @@ export default function Checkout() {
               <button
                 disabled={
                   (cartItems && cartItems.length === 0) ||
-                  (!checkoutFormData || Object.keys(checkoutFormData).length === 0)
+                  (!addressFormData || Object.keys(addressFormData).length === 0)
                 }
                 onClick={handleCheckout}
                 className="disabled:opacity-50 mt-5 mr-5 w-full  inline-block bg-green-500 text-white px-5 py-3 text-xs font-medium uppercase tracking-wide"

@@ -40,7 +40,7 @@ export const getAllCartItems = async (id) => {
 export const deleteFromCart = async (id) => {
   try {
     const res = await fetch(`/api/cart/delete-from-cart?id=${id}`, {
-      method: "APAGAR",
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
