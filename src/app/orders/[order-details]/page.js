@@ -1,7 +1,7 @@
 "use client";
 
 import { GlobalContext } from "@/context";
-import { getOrderDetails } from "@/services/order";
+import { getOrderDetails } from "@/app/services/order";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
